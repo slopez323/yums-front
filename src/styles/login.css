@@ -1,0 +1,30 @@
+#login-page{
+    height: 100vh;
+    width: 100vw;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#login-page .logo{
+    font-size: 6rem;
+}
+
+#login-divider{
+    height: 50vh;
+    width: 2px;
+    background-color: gray;
+}
+
+#login-form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#login-form button{
+    align-self: center;
+    margin: 10px;
+}
