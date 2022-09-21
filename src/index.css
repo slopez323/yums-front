@@ -1,11 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Marck+Script&family=Ms+Madi&family=Sacramento&family=Yesteryear&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Marck+Script&family=Ms+Madi&family=Sacramento&family=Yesteryear&family=Roboto+Condensed&family=Caveat&display=swap');
 
 :root{
   font-size: 16px;
+  font-family: 'Roboto Condensed', sans-serif;
 }
 
 body {
   margin: 0;
+}
+
+#root{
+  width: 100vw;
+  height: 100vh;
+
+  display: grid;
+  grid-template-rows: 1fr;
 }
 
 .logo{
@@ -24,7 +33,7 @@ input{
   font-weight: 400;
   line-height: 1.29;
   letter-spacing: .16px;
-  border-radius: 0;
+  border-radius: 5px;
   outline: 2px solid transparent;
   outline-offset: -2px;
   width: 100%;
@@ -38,7 +47,57 @@ input{
 }
 
 input:focus{
-  outline: 2px solid #0f62fe;
+  outline: 2px solid #596e79;
   outline-offset: -2px;
+}
+
+button {
+  background-color: #fff;
+  border: 0 solid #e2e8f0;
+  border-radius: 1.5rem;
+  box-sizing: border-box;
+  color: #0d172a;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 1rem 1.6rem;
+  text-align: center;
+  text-decoration: none #0d172a solid;
+  text-decoration-thickness: auto;
+  transition: all .1s cubic-bezier(.4, 0, .2, 1);
+  box-shadow: 0px 1px 2px rgba(166, 175, 195, 0.25);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+button:hover {
+  background-color: #1e293b;
+  color: #fff;
+}
+
+select{
+  font-family: inherit;
+  border: none;
+  border-radius: 5px;
+  background-color: transparent;
+  background-color: #d8cfcf;
+  border-bottom: 1px solid #8d8d8d;
+  padding: 0 5px;
+}
+
+select:focus{
+  outline: 2px solid #596e79;
+  outline-offset: -2px;
+}
+
+@media (min-width: 768px) {
+  button {
+    font-size: 1.125rem;
+    padding: 1rem 2rem;
+  }
 }
 

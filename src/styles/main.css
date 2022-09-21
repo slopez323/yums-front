@@ -1,4 +1,119 @@
-#app-overview{
+#main{
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+.popup-container{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: #f0ece2d3;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+#intro{
     display: flex;
     justify-content: center;
+}
+
+#dashboard{
+    background-color: #dfd3c3;
+    padding: 20px;  
+    position: relative; 
+}
+
+.options-bar{
+    margin-bottom: 10px;
+
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.options-bar input{
+    width: 250px;
+    height: 30px;
+}
+
+.search-bar{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.fa-magnifying-glass{
+    color: #575555;
+    cursor: pointer;
+}
+
+.card-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.restaurant-card{
+    background-color: white;
+    height: 300px;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    cursor: pointer;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.restaurant-card img{
+    width: 100%;
+    height: 80%;
+    object-fit: cover;
+}
+
+.restaurant-name{
+    margin: 0;
+}
+
+.restaurant-rating{
+    display: flex;
+    color: #c06c84;
+}
+
+.restaurant-date{
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    font-family: 'Caveat', cursive;
+    font-size: 1.2rem;
+    color: #596e79;
+}
+
+.add-button{
+    padding: 15px;
+    background-color:#596e79;
+    border-radius: 50%;
+    color:#f0ece2;
+    font-size: 1.8rem;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (hover:hover) {
+    .restaurant-card:hover{
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    }
+    .add-button:hover{
+        transform: scale(1.05);
+        background-color: #c06c84;
+    }
 }

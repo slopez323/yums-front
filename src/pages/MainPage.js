@@ -2,13 +2,11 @@ import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
 import "../styles/main.css";
 
-const MainPage = ({ user }) => {
+const MainPage = ({ username }) => {
   return (
     <div id="main">
-      <Header user={user} />
-      <div id="main-content">
-        <Outlet />
-      </div>
+      <Header username={username} />
+      <Outlet />
     </div>
   );
 };

@@ -2,12 +2,12 @@ import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import "../styles/login.css";
 
-const LoginPage = ({ user }) => {
+const LoginPage = ({ username }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) navigate("/");
-  }, [user]);
+    if (username) navigate("/");
+  }, [username]);
 
   return (
     <div id="login-page">

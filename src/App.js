@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Overview from "./components/Overview";
 import LoginPage from "./pages/LoginPage";
@@ -8,15 +8,15 @@ import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
 
 const App = () => {
-  const [user, setUser] = useState();
+  const [username, setUsername] = useState("user1");
 
   return (
     <Routes>
-      <Route path="/" element={<MainPage user={user} />}>
-        <Route index element={<Overview />} />
-        <Route path="dash" element={<Dashboard />} />
+      <Route path="/" element={<MainPage username={username} />}>
+        <Route index element={<Overview username={username} />} />
+        <Route path="dash" element={<Dashboard username={username} />} />
       </Route>
-      <Route path="/login" element={<LoginPage user={user} />}>
+      <Route path="/login" element={<LoginPage username={username} />}>
         <Route index element={<LoginForm />} />
         <Route path="register" element={<SignupForm />} />
       </Route>
