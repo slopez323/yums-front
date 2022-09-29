@@ -9,7 +9,10 @@ const Overview = ({ username }) => {
   }, []);
 
   return (
-    <div id="intro" className="main-content">
+    <div
+      className="main-content"
+      style={{ display: "flex", justifyContent: "center" }}
+    >
       <div>
         <p>Food Diary.</p>
         <p>Remember the yums.</p>

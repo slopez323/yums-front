@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import users from "../sampleusers";
+import users from "../mockData/sampleusers";
 import RestaurantCard from "./RestaurantCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
-import Album from "./Album";
+import { usePopup } from "../contexts/popupContext";
 
 const Dashboard = ({ username }) => {
   const [restaurants, setRestaurants] = useState([]);
-  const [showAlbum, setShowAlbum] = useState({ show: false, data: {} });
+  const { popup, showNewAlbum } = usePopup();
 
   useEffect(() => {
     // update to fetch from db later
@@ -18,32 +18,52 @@ const Dashboard = ({ username }) => {
   }, [username]);
 
   return (
-    <div id="dashboard" className="main-content">
-      {showAlbum.show && (
-        <Album data={showAlbum.data} setShowAlbum={setShowAlbum} />
-      )}
-      <div className="options-bar">
-        <div className="search-bar">
-          <input placeholder="Search" />
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
+    <div
+      className="main-content"
+      style={{
+        backgroundColor: "#dfd3c3",
+        padding: "20px",
+        position: "relative",
+      }}
+    >
+      {popup}
+      <div
+        style={{
+          marginBottom: "10px",
+          display: "flex",
+          justifyContent: "flex-end",
+          gap: "15px",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+          <input
+            placeholder="Search"
+            style={{ width: "250px", height: "30px" }}
+          />
+          <FontAwesomeIcon
+            icon={faMagnifyingGlass}
+            style={{ color: "#575555", cursor: "pointer" }}
+          />
         </div>
         <select>
           <option>Oldest First</option>
           <option>Newest First</option>
         </select>
       </div>
-      <div className="card-container">
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+          gap: "15px",
+        }}
+      >
         {restaurants.map((rest) => {
           return (
-            <RestaurantCard
-              rest={rest}
-              setShowAlbum={setShowAlbum}
-              key={`${rest.name}-${rest.date}`}
-            />
+            <RestaurantCard rest={rest} key={`${rest.name}-${rest.date}`} />
           );
         })}
       </div>
-      <div className="add-button" title="new album">
+      <div className="add-button" title="new album" onClick={showNewAlbum}>
         <FontAwesomeIcon icon={faPlus} />
       </div>
     </div>

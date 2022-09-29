@@ -1,3 +1,8 @@
+import img1 from "../mockData/samplePhotos/IMG_0068.jpg";
+import img2 from "../mockData/samplePhotos/IMG_0057.jpeg";
+import img3 from "../mockData/samplePhotos/IMG_0058.jpeg";
+import img4 from "../mockData/samplePhotos/IMG_0060.jpeg";
+
 const users = [
   {
     id: 1,
@@ -18,11 +23,13 @@ const users = [
             dishName: "dish1",
             dishImage: "",
             dishRating: 5,
+            dishId: "a1",
           },
           {
             dishName: "dish2",
             dishImage: "",
             dishRating: 4,
+            dishId: "a2",
           },
         ],
         otherImages: [],
@@ -41,15 +48,47 @@ const users = [
             dishName: "dish1",
             dishImage: "",
             dishRating: 3,
+            dishId: "b1",
           },
           {
             dishName: "dish2",
             dishImage: "",
             dishRating: 4,
+            dishId: "b2",
           },
         ],
         otherImages: [],
         notes: "",
+      },
+      {
+        name: "The Chemistry Room",
+        albumId: 3,
+        coverPhoto: img1,
+        rating: 4,
+        location: "NYC",
+        date: "9/21/2022",
+        dishList: [
+          {
+            dishName: "Smoked Miso Soup",
+            dishImage: img2,
+            dishRating: 4,
+            dishId: "c1",
+          },
+          {
+            dishName: "Kumamoto Oyster",
+            dishImage: img3,
+            dishRating: 5,
+            dishId: "c2",
+          },
+          {
+            dishName: "King Salmon",
+            dishImage: img4,
+            dishRating: 5,
+            dishId: "c3",
+          },
+        ],
+        otherImages: [],
+        notes: "So good!! \n hello",
       },
     ],
   },

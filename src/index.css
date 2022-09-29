@@ -10,7 +10,7 @@ body {
 }
 
 #root{
-  width: 100vw;
+  max-width: 100vw;
   height: 100vh;
 
   display: grid;
@@ -72,6 +72,8 @@ button {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+
+  align-self: center;
 }
 
 button:hover {
@@ -94,6 +96,67 @@ select:focus{
   outline-offset: -2px;
 }
 
+.auth-switch{
+  font-size: .8rem;
+  color: #fcf4d9;
+}
+
+.auth-switch span{
+  color: #596e79;
+  cursor: pointer;
+}
+
+.restaurant-rating{
+  display: flex;
+  color: #c06c84;
+}
+
+.add-button{
+  padding: 15px;
+  background-color:#596e79;
+  border-radius: 50%;
+  color:#f0ece2;
+  font-size: 1.8rem;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.album{
+  width: 95%;
+  height: 90%;
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: auto;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.back-button{
+  padding: 10px;
+  align-self: flex-start;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #596e79;
+  font-size: 1.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media (min-width: 768px) {
   button {
     font-size: 1.125rem;
@@ -101,3 +164,16 @@ select:focus{
   }
 }
 
+@media (hover:hover) {
+  .restaurant-card:hover{
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  }
+  .add-button:hover{
+      transform: scale(1.05);
+      background-color: #c06c84;
+  }
+  .back-button:hover{
+    background-color: #596e79;
+    color: #f0ece2;
+}
+}

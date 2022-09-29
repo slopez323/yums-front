@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Overview from "./components/Overview";
-import LoginPage from "./pages/LoginPage";
-import MainPage from "./pages/MainPage";
+import LoginPage from "./components/pages/LoginPage";
+import MainPage from "./components/pages/MainPage";
 import Dashboard from "./components/Dashboard";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
