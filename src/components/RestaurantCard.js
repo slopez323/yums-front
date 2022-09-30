@@ -1,6 +1,5 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { usePopup } from "../contexts/popupContext";
+import StarRating from "./StarRating";
 
 const RestaurantCard = ({ rest }) => {
   const { showAlbum } = usePopup();
@@ -26,11 +25,7 @@ const RestaurantCard = ({ rest }) => {
         style={{ width: "100%", height: "80%", objectFit: "cover" }}
       />
       <p style={{ margin: 0 }}>{rest.name}</p>
-      <div className="restaurant-rating">
-        {[...Array(rest.rating)].map((x, i) => {
-          return <FontAwesomeIcon icon={faStar} key={i} />;
-        })}
-      </div>
+      <StarRating rating={rest.rating} />
       <div
         style={{
           position: "absolute",

@@ -1,19 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowLeft,
-  faStar,
-  faLocationDot,
-} from "@fortawesome/free-solid-svg-icons";
-import PopupContainer from "./PopupContainer";
+import { faArrowLeft, faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import PopupContainer from "./layout/PopupContainer";
 import DishCard from "./DishCard";
 import { usePopup } from "../contexts/popupContext";
+import Popup from "./layout/Popup";
+import StarRating from "./StarRating";
 
 const Album = ({ data }) => {
   const { hidePopup } = usePopup();
 
   return (
     <PopupContainer>
-      <div className="album">
+      <Popup>
         <div className="back-button" onClick={hidePopup}>
           <FontAwesomeIcon icon={faArrowLeft} />
         </div>
@@ -26,25 +24,7 @@ const Album = ({ data }) => {
               alignItems: "center",
             }}
           >
-            {data.name}{" "}
-            <div
-              style={{
-                fontSize: "1.2rem",
-                color: "#ececec",
-                display: "flex",
-              }}
-            >
-              <span className="restaurant-rating">
-                {[...Array(data.rating)].map((x, i) => (
-                  <FontAwesomeIcon icon={faStar} key={`star-${i}`} />
-                ))}
-              </span>
-              <span>
-                {[...Array(5 - data.rating)].map((x, i) => (
-                  <FontAwesomeIcon icon={faStar} key={`emptystar-${i}`} />
-                ))}
-              </span>
-            </div>
+            {data.name} <StarRating rating={data.rating} />
           </div>
           <div className="album-location">
             <FontAwesomeIcon
@@ -95,7 +75,7 @@ const Album = ({ data }) => {
             </div>
           </div>
         </div>
-      </div>
+      </Popup>
     </PopupContainer>
   );
 };

@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { PopupProvider } from "../../contexts/popupContext";
-import Header from "../Header";
+import Header from "../layout/Header";
 
 const MainPage = ({ username }) => {
   return (
