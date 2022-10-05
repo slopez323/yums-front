@@ -1,22 +1,8 @@
 import StarRating from "./StarRating";
-import { useState } from "react";
 
 const AlbumInput = ({ label, type, value, onChange }) => {
-  // const [newRating, setNewRating] = useState();
-
-  // const onStarClick = (i) => {
-  //   setNewRating(i + 1);
-  // };
-
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "auto 1fr",
-        gap: "10px",
-        alignItems: "center",
-      }}
-    >
+    <div className="album-input">
       <label>{label}</label>
       {type === "rating" ? (
         <StarRating
@@ -25,12 +11,7 @@ const AlbumInput = ({ label, type, value, onChange }) => {
           onStarClick={onChange}
         />
       ) : (
-        <input
-          type={type}
-          value={value}
-          style={{ maxWidth: "300px" }}
-          onChange={onChange}
-        />
+        <input type={type} value={value} onChange={onChange} />
       )}
     </div>
   );

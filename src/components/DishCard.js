@@ -1,26 +1,13 @@
 const DishCard = ({ dish }) => {
-  const { dishName, dishImage, dishRating } = dish;
+  const { name, image, rating } = dish;
 
   return (
     <div>
-      <div
-        style={{
-          fontFamily: "Caveat",
-          textAlign: "end",
-          fontSize: "1.3rem",
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "0 5px",
-        }}
-      >
-        <div>{dishName}</div>
-        <div>{dishRating}/5</div>
+      <div className="dishlist-title">
+        <div>{name}</div>
+        <div>{rating}/5</div>
       </div>
-      <img
-        src={dishImage}
-        alt={dishName}
-        style={{ width: "100%", maxHeight: "80%", objectFit: "cover" }}
-      />
+      <img src={image.url} alt={name} className="dishlist-image" />
     </div>
   );
 };

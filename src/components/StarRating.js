@@ -3,15 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const StarRating = ({ rating, style, onStarClick }) => {
   return (
-    <div
-      style={{
-        fontSize: "1.2rem",
-        color: "#ececec",
-        display: "flex",
-        ...style,
-      }}
-    >
-      <span style={{ display: "flex", color: "#c06c84" }}>
+    <div className="star-rating">
+      <span className="filled-star">
         {[...Array(rating)].map((x, i) => (
           <FontAwesomeIcon
             icon={faStar}

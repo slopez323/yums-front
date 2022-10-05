@@ -1,18 +1,17 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/authContext";
 
-const Overview = ({ username }) => {
+const Overview = () => {
+  const { userId } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (username) navigate("/dash");
+    if (userId) navigate("/dash");
   }, []);
 
   return (
-    <div
-      className="main-content"
-      style={{ display: "flex", justifyContent: "center" }}
-    >
+    <div className="overview">
       <div>
         <p>Food Diary.</p>
         <p>Remember the yums.</p>

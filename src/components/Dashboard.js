@@ -1,45 +1,25 @@
 import { useEffect, useState } from "react";
-import users from "../mockData/sampleusers";
 import RestaurantCard from "./RestaurantCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { usePopup } from "../contexts/popupContext";
+import { useOutletContext } from "react-router-dom";
 
-const Dashboard = ({ username }) => {
+const Dashboard = () => {
+  const { user } = useOutletContext();
   const [restaurants, setRestaurants] = useState([]);
   const { popup, showNewAlbum } = usePopup();
 
   useEffect(() => {
-    // update to fetch from db later
-    if (username) {
-      const userData = users.find((user) => user.username === username);
-      setRestaurants(userData.restaurantList);
-    }
-  }, [username]);
+    if (user) setRestaurants(user.restaurantList);
+  }, [user]);
 
   return (
-    <div
-      className="main-content"
-      style={{
-        backgroundColor: "#dfd3c3",
-        padding: "20px",
-        position: "relative",
-      }}
-    >
+    <div className="dashboard">
       {popup}
-      <div
-        style={{
-          marginBottom: "10px",
-          display: "flex",
-          justifyContent: "flex-end",
-          gap: "15px",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-          <input
-            placeholder="Search"
-            style={{ width: "250px", height: "30px" }}
-          />
+      <div className="dashboard-options">
+        <div className="search">
+          <input placeholder="Search" />
           <FontAwesomeIcon
             icon={faMagnifyingGlass}
             style={{ color: "#575555", cursor: "pointer" }}
@@ -50,13 +30,7 @@ const Dashboard = ({ username }) => {
           <option>Newest First</option>
         </select>
       </div>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-          gap: "15px",
-        }}
-      >
+      <div className="dashboard-main">
         {restaurants.map((rest) => {
           return (
             <RestaurantCard rest={rest} key={`${rest.name}-${rest.date}`} />

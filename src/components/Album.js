@@ -15,15 +15,8 @@ const Album = ({ data }) => {
         <div className="back-button" onClick={hidePopup}>
           <FontAwesomeIcon icon={faArrowLeft} />
         </div>
-        <div style={{ padding: "0 20px" }}>
-          <div
-            style={{
-              fontSize: "1.4rem",
-              display: "flex",
-              gap: "10px",
-              alignItems: "center",
-            }}
-          >
+        <div className="album-view">
+          <div className="album-title">
             {data.name} <StarRating rating={data.rating} />
           </div>
           <div className="album-location">
@@ -34,44 +27,15 @@ const Album = ({ data }) => {
             <span>{data.location}</span>
           </div>
           <div>{data.date}</div>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "3fr 1fr",
-              gap: "20px",
-            }}
-          >
-            <div
-              style={{
-                padding: "10px 0",
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-                gap: "10px",
-              }}
-            >
+          <div className="album-body">
+            <div className="dishlist-container">
               {data.dishList.map((dish) => {
                 return <DishCard dish={dish} key={dish.dishId} />;
               })}
             </div>
-            <div
-              style={{
-                backgroundColor: "#f8da5b",
-                padding: "10px",
-                overflow: "auto",
-              }}
-            >
-              <p style={{ fontSize: "1.1rem", fontWeight: "bold", margin: 0 }}>
-                Notes:
-              </p>
-              <div
-                style={{
-                  padding: "10px",
-                  fontFamily: "Caveat",
-                  fontSize: "1.2rem",
-                }}
-              >
-                {data.notes}
-              </div>
+            <div className="notes">
+              <p>Notes:</p>
+              <div>{data.notes}</div>
             </div>
           </div>
         </div>
