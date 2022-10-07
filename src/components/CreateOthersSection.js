@@ -1,8 +1,8 @@
-import { useDispatch } from "react-redux";
-import { addOtherImage } from "../contexts/otherImageSlice";
+import { useAlbum } from "../contexts/albumContext";
+import ImageThumbNail from "./ImageThumbnail";
 
-const CreateOthersSection = ({ notes, setNotes }) => {
-  const dispatch = useDispatch();
+const CreateOthersSection = ({ notes, setNotes, name }) => {
+  const { otherImages, addOtherImage } = useAlbum();
 
   const showWidget = () => {
     let widget = window.cloudinary.createUploadWidget(
@@ -15,14 +15,15 @@ const CreateOthersSection = ({ notes, setNotes }) => {
         clientAllowedFormats: "image",
       },
       (error, result) => {
-        if (!error && result && result.event === "success") {
-          console.log(result);
-          dispatch(
-            addOtherImage({
-              url: result.info.url,
-              public_id: result.info.public_id,
-            })
-          );
+        if (!error && result && result.event === "queues-end") {
+          const files = result.info.files;
+          const newImages = files.map((file) => {
+            return {
+              url: file.uploadInfo.url,
+              public_id: file.uploadInfo.public_id,
+            };
+          });
+          addOtherImage([...newImages]);
         }
       }
     );
@@ -37,6 +38,13 @@ const CreateOthersSection = ({ notes, setNotes }) => {
         onChange={(e) => setNotes(e.target.value)}
       />
       <button onClick={showWidget}>Upload Other Album Images</button>
+      <div className="add-other-images">
+        {otherImages.map((image) => {
+          return (
+            <ImageThumbNail image={image} name={name} key={image.public_id} />
+          );
+        })}
+      </div>
     </div>
   );
 };

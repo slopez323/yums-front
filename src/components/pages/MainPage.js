@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { AlbumProvider } from "../../contexts/albumContext";
 import { useAuth } from "../../contexts/authContext";
 import { PopupProvider } from "../../contexts/popupContext";
 import Header from "../layout/Header";
@@ -26,10 +27,12 @@ const MainPage = () => {
 
   return (
     <PopupProvider>
-      <div className="main-page">
-        <Header user={user} />
-        <Outlet context={{ user }} />
-      </div>
+      <AlbumProvider>
+        <div className="main-page">
+          <Header user={user} />
+          <Outlet context={{ user }} />
+        </div>
+      </AlbumProvider>
     </PopupProvider>
   );
 };

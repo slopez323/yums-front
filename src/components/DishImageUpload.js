@@ -1,6 +1,9 @@
+import { useAlbum } from "../contexts/albumContext";
 import ImageThumbNail from "./ImageThumbnail";
 
-const DishImageUpload = ({ image, name, onImageChange }) => {
+const DishImageUpload = ({ dish }) => {
+  const { updateDishes } = useAlbum();
+
   const showWidget = () => {
     let widget = window.cloudinary.createUploadWidget(
       {
@@ -14,10 +17,14 @@ const DishImageUpload = ({ image, name, onImageChange }) => {
       },
       (error, result) => {
         if (!error && result && result.event === "success") {
-          onImageChange({
+          updateDishes(dish.count, "image", {
             url: result.info.url,
             public_id: result.info.public_id,
           });
+          // onImageChange({
+          //   url: result.info.url,
+          //   public_id: result.info.public_id,
+          // });
         }
       }
     );
@@ -26,13 +33,13 @@ const DishImageUpload = ({ image, name, onImageChange }) => {
 
   return (
     <div>
-      {!image ? (
+      {!dish.image ? (
         <button onClick={showWidget}>Upload Image</button>
       ) : (
         <ImageThumbNail
-          image={image}
-          onImageChange={onImageChange}
-          name={name}
+          image={dish.image}
+          // onImageChange={onImageChange}
+          name={dish.name}
         />
       )}
     </div>

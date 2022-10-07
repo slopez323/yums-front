@@ -1,7 +1,7 @@
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const StarRating = ({ rating, style, onStarClick }) => {
+const StarRating = ({ rating, onStarClick }) => {
   return (
     <div className="star-rating">
       <span className="filled-star">

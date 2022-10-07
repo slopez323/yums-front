@@ -277,13 +277,28 @@ header{
   align-items: center;
 }
 
-.album-input input{
-  max-width: 300px;
+.album-input .star-rating{
+  cursor: pointer;
 }
 
 .create-general-section{
   display: grid;
+  grid-template-columns: 1fr 1fr;
+
+}
+
+.general-details{
+  display: grid;
   gap: 10px;
+}
+
+.create-cover{
+  height: 150px;
+  justify-self: center;
+}
+
+.create-cover img{
+  height: 100%;
 }
 
 .create-dish-section{
@@ -330,18 +345,22 @@ header{
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
-.thumbnail .fa{
+.thumbnail svg{
   position: absolute;
   top: 0;
   right: 0;
-  cursor: pointer;
 }
 
 .thumbnail img{
   height: 100%;
   width: 100%;
+}
+
+.selected{
+  border: 2px solid #c06c84;
 }
 
 .create-others-section{
@@ -357,6 +376,10 @@ header{
   width: 70%;
   height: 100px;
   padding: 10px;
+}
+
+.add-other-images{
+  display: flex;
 }
 
 .back-button{

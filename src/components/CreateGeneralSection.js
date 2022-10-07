@@ -1,30 +1,37 @@
+import { useAlbum } from "../contexts/albumContext";
 import AlbumInput from "./AlbumInput";
 
-const CreateGeneralSection = ({ general, setGeneral, onStarClick }) => {
+const CreateGeneralSection = () => {
+  const { general, coverPhoto, updateGeneralDetails } = useAlbum();
+
   return (
     <div className="create-general-section">
-      <AlbumInput
-        label="Restaurant Name"
-        value={general.name}
-        onChange={(e) => setGeneral({ ...general, name: e.target.value })}
-      />
-      <AlbumInput
-        label="Location"
-        value={general.location}
-        onChange={(e) => setGeneral({ ...general, location: e.target.value })}
-      />
-      <AlbumInput
-        label="Date"
-        type="date"
-        value={general.date}
-        onChange={(e) => setGeneral({ ...general, date: e.target.value })}
-      />
-      <AlbumInput
-        label="Rating"
-        type="rating"
-        value={general.rating}
-        onChange={onStarClick}
-      />
+      <div className="general-details">
+        <AlbumInput
+          label="Restaurant Name"
+          value={general.name}
+          onChange={(e) => updateGeneralDetails("name", e.target.value)}
+        />
+        <AlbumInput
+          label="Location"
+          value={general.location}
+          onChange={(e) => updateGeneralDetails("location", e.target.value)}
+        />
+        <AlbumInput
+          label="Date"
+          type="date"
+          value={general.date}
+          onChange={(e) => updateGeneralDetails("date", e.target.value)}
+        />
+        <AlbumInput label="Rating" type="rating" value={general.rating} />
+      </div>
+      {coverPhoto ? (
+        <div className="create-cover">
+          <img src={coverPhoto} alt={general.name} />
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
