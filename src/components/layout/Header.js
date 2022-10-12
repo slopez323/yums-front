@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import { useAlbum } from "../../contexts/albumContext";
 
-const Header = ({ user }) => {
+const Header = () => {
+  const { userData } = useAlbum();
   const navigate = useNavigate();
 
   return (
@@ -8,8 +10,8 @@ const Header = ({ user }) => {
       <div className="logo" style={{ fontSize: "4rem" }}>
         Yums
       </div>
-      {user ? (
-        <div>{user.username}</div>
+      {userData ? (
+        <div>{userData.username}</div>
       ) : (
         <button
           style={{ alignSelf: "center" }}

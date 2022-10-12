@@ -3,16 +3,16 @@ import RestaurantCard from "./RestaurantCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { usePopup } from "../contexts/popupContext";
-import { useOutletContext } from "react-router-dom";
+import { useAlbum } from "../contexts/albumContext";
 
 const Dashboard = () => {
-  const { user } = useOutletContext();
+  const { userData } = useAlbum();
   const [restaurants, setRestaurants] = useState([]);
   const { popup, showNewAlbum } = usePopup();
 
   useEffect(() => {
-    if (user) setRestaurants(user.restaurantList);
-  }, [user]);
+    if (userData) setRestaurants(userData.restaurantList);
+  }, [userData]);
 
   return (
     <div className="dashboard">

@@ -326,11 +326,21 @@ header{
   font-weight: 700;
 }
 
+.fa-square-minus{
+  color: #596e79;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
 .dish-details{
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+}
+
+.dish-details .album-input{
+  grid-template-columns: auto 1fr;
 }
 
 .dish-rating, .dish-rating select{
@@ -340,8 +350,8 @@ header{
 .thumbnail{
   position: relative;
   margin-left: 20px;
-  height: 50px;
-  width: 50px;
+  height: 60px;
+  object-fit: cover;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -349,9 +359,9 @@ header{
 }
 
 .thumbnail svg{
-  position: absolute;
+  /* position: absolute;
   top: 0;
-  right: 0;
+  right: 0; */
 }
 
 .thumbnail img{
@@ -397,6 +407,21 @@ header{
 
 .album-view{
   padding: 0 20px;
+}
+
+.album-actions{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.album-actions svg{
+  padding: 8px 0;
+  cursor: pointer;
+  font-size: 1.2rem;
 }
 
 .album-title{
@@ -453,6 +478,37 @@ header{
   white-space: pre;
 }
 
+.carousel{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.carousel-main{
+  position: relative;
+  height: 300px;
+
+  display: flex;
+}
+
+.carousel img{
+  height: 300px;
+}
+
+.arrow{
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #1e293b;
+
+  display: flex;
+  align-items: center;
+}
+
+.arrow svg{
+  padding: 0 5px;
+}
+
 @media (min-width: 768px) {
   button {
     font-size: 1.125rem;
@@ -471,5 +527,11 @@ header{
   .back-button:hover{
     background-color: #596e79;
     color: #f0ece2;
-}
+  }
+  .fa-trash:hover{
+    color: crimson;
+  }
+  .fa-pen-to-square:hover{
+    color: darkgoldenrod;
+  }
 }

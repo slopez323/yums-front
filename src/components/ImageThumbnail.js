@@ -8,15 +8,17 @@ const ImageThumbNail = ({ image, name }) => {
   const selected = image.url === coverPhoto ? "selected" : "";
 
   return (
-    <div
-      className={`thumbnail ${selected}`}
-      onClick={() => chooseCoverPhoto(image.url)}
-    >
+    <div className="thumbnail">
+      <img
+        src={image.url}
+        alt={name}
+        className={selected}
+        onClick={() => chooseCoverPhoto(image.url)}
+      />
       <FontAwesomeIcon
         icon={faCircleXmark}
         onClick={() => deleteImage(image.public_id)}
       />
-      <img src={image.url} alt={name} />
     </div>
   );
 };

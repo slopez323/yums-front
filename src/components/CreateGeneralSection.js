@@ -1,7 +1,7 @@
 import { useAlbum } from "../contexts/albumContext";
 import AlbumInput from "./AlbumInput";
 
-const CreateGeneralSection = () => {
+const CreateGeneralSection = ({ data }) => {
   const { general, coverPhoto, updateGeneralDetails } = useAlbum();
 
   return (

@@ -7,7 +7,7 @@ const DishCard = ({ dish }) => {
         <div>{name}</div>
         <div>{rating}/5</div>
       </div>
-      <img src={image.url} alt={name} className="dishlist-image" />
+      <img src={image ? image.url : ""} alt={name} className="dishlist-image" />
     </div>
   );
 };

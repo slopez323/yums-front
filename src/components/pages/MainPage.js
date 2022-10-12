@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { AlbumProvider } from "../../contexts/albumContext";
 import { useAuth } from "../../contexts/authContext";
@@ -7,20 +7,10 @@ import Header from "../layout/Header";
 
 const MainPage = () => {
   const { userId } = useAuth();
-  const [user, setUser] = useState();
   const navigate = useNavigate();
-
-  const getUserData = async () => {
-    const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
-    const url = `${urlEndpoint}/users/user?id=${userId}`;
-    const response = await fetch(url);
-    const responseJSON = await response.json();
-    if (responseJSON.success) setUser(responseJSON.message);
-  };
 
   useEffect(() => {
     if (userId) {
-      getUserData();
       navigate("/dash");
     } else navigate("/");
   }, [userId]);
@@ -29,8 +19,8 @@ const MainPage = () => {
     <PopupProvider>
       <AlbumProvider>
         <div className="main-page">
-          <Header user={user} />
-          <Outlet context={{ user }} />
+          <Header />
+          <Outlet />
         </div>
       </AlbumProvider>
     </PopupProvider>

@@ -1,3 +1,5 @@
+import { faSquareMinus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAlbum } from "../contexts/albumContext";
 import AlbumInput from "./AlbumInput";
 import DishImageUpload from "./DishImageUpload";
@@ -9,6 +11,7 @@ const AddDish = ({ dish }) => {
     <div>
       <div className="dish-count">{`DISH ${dish.count}`}</div>
       <div className="dish-details">
+        <FontAwesomeIcon icon={faSquareMinus} />
         <AlbumInput
           label="Dish Name"
           value={dish.name}

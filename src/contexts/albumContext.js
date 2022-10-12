@@ -1,9 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useAuth } from "./authContext";
 import { usePopup } from "./popupContext";
 
 const albumContext = createContext();
+const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
 
 export const AlbumProvider = ({ children }) => {
+  const { userId } = useAuth();
   const { hidePopup } = usePopup();
   const newDish = { name: "", image: null, rating: 5, count: 1 };
   const initialGeneral = {
@@ -19,6 +22,9 @@ export const AlbumProvider = ({ children }) => {
   const [otherImages, setOtherImages] = useState([]);
   const [notes, setNotes] = useState("");
   const [coverPhoto, setCoverPhoto] = useState();
+
+  const [userData, setUserData] = useState();
+  const [refreshData, setRefreshData] = useState();
 
   const updateGeneralDetails = (key, value) => {
     setGeneral({ ...general, [key]: value });
@@ -39,7 +45,6 @@ export const AlbumProvider = ({ children }) => {
   };
 
   const deleteImage = async (id) => {
-    const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
     const url = `${urlEndpoint}/images/delete`;
     const response = await fetch(url, {
       method: "DELETE",
@@ -74,6 +79,8 @@ export const AlbumProvider = ({ children }) => {
     setDishes([...dishes, { ...newDish, count }]);
   };
 
+  const removeDishes = () => {};
+
   const addOtherImage = (img) => {
     setOtherImages([...otherImages, ...img]);
   };
@@ -95,6 +102,98 @@ export const AlbumProvider = ({ children }) => {
     });
   };
 
+  const createAlbum = async () => {
+    const { name, location, date, rating } = general;
+    const dishList = dishes.map((dish) => {
+      const { count, ...rest } = dish;
+      return rest;
+    });
+
+    const albumDetails = {
+      userId,
+      name,
+      location,
+      coverPhoto,
+      date,
+      rating,
+      dishes: dishList,
+      otherImages,
+      notes,
+    };
+    const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
+    const url = `${urlEndpoint}/users/create-album`;
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(albumDetails),
+    });
+    const responseJSON = await response.json();
+    if (responseJSON.success) {
+      setRefreshData(response);
+      hidePopup();
+    }
+  };
+
+  const editAlbum = async (albumId) => {
+    const { name, location, date, rating } = general;
+    const dishList = dishes.map((dish) => {
+      const { count, ...rest } = dish;
+      return rest;
+    });
+
+    const albumDetails = {
+      userId,
+      albumId,
+      name,
+      location,
+      coverPhoto,
+      date,
+      rating,
+      dishes: dishList,
+      otherImages,
+      notes,
+    };
+    const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
+    const url = `${urlEndpoint}/users/edit-album`;
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(albumDetails),
+    });
+    const responseJSON = await response.json();
+    if (responseJSON.success) {
+      setRefreshData(response);
+      hidePopup();
+    }
+  };
+
+  const setEditData = (data) => {
+    const {
+      coverPhoto,
+      date,
+      dishList,
+      location,
+      name,
+      notes,
+      otherImages,
+      rating,
+    } = data;
+
+    const dishCount = dishList.map((dish, i) => {
+      return { ...dish, count: i + 1 };
+    });
+
+    setGeneral({ name, location, date, rating });
+    setDishes([...dishCount]);
+    setNotes(notes);
+    setCoverPhoto(coverPhoto);
+    setOtherImages([...otherImages]);
+  };
+
   const cancelCreate = () => {
     setGeneral({ ...initialGeneral });
     setDishes([{ ...newDish }]);
@@ -104,6 +203,44 @@ export const AlbumProvider = ({ children }) => {
     deleteUnsavedImages();
     hidePopup();
   };
+
+  const getUserData = async () => {
+    const url = `${urlEndpoint}/users/user?id=${userId}`;
+    const response = await fetch(url);
+    const responseJSON = await response.json();
+    if (responseJSON.success) setUserData(responseJSON.message);
+  };
+
+  const deleteAlbum = async (albumId) => {
+    const album = userData.restaurantList.find(
+      (item) => item.albumId === albumId
+    );
+    const dishImages = album.dishList.reduce((filtered, dish) => {
+      if (dish.image) filtered.push(dish.image.public_id);
+      return filtered;
+    }, []);
+    const other = album.otherImages.map((img) => img.public_id);
+    const images = [...dishImages, ...other];
+
+    const url = `${urlEndpoint}/users/delete-album`;
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId, albumId }),
+    });
+    const responseJSON = await response.json();
+    if (responseJSON.success) {
+      images.forEach(async (img) => await deleteImage(img));
+      setRefreshData(response);
+      hidePopup();
+    }
+  };
+
+  useEffect(() => {
+    if (userId) getUserData();
+  }, [userId, refreshData]);
 
   useEffect(() => {
     if (
@@ -119,7 +256,6 @@ export const AlbumProvider = ({ children }) => {
       if (otherImages.length > 0) {
         setCoverPhoto(otherImages[0].url);
       }
-      // add class to highlight thumbnail of coverphoto
     }
     if (
       coverPhoto &&
@@ -143,6 +279,11 @@ export const AlbumProvider = ({ children }) => {
     addOtherImage,
     cancelCreate,
     deleteImage,
+    createAlbum,
+    userData,
+    deleteAlbum,
+    setEditData,
+    editAlbum,
   };
 
   return (

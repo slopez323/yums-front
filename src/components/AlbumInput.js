@@ -3,6 +3,7 @@ import StarRating from "./StarRating";
 
 const AlbumInput = ({ label, type, value, onChange }) => {
   const { onStarClick } = useAlbum();
+
   return (
     <div className="album-input">
       <label>{label}</label>
