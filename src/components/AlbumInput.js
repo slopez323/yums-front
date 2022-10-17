@@ -1,14 +1,26 @@
+import { useEffect, useState } from "react";
+import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { useAlbum } from "../contexts/albumContext";
 import StarRating from "./StarRating";
 
 const AlbumInput = ({ label, type, value, onChange }) => {
-  const { onStarClick } = useAlbum();
+  const { onStarClick, updateGeneralDetails } = useAlbum();
+  const [location, setLocation] = useState();
+
+  useEffect(() => {
+    updateGeneralDetails("location", location);
+  }, [location]);
 
   return (
     <div className="album-input">
       <label>{label}</label>
       {type === "rating" ? (
         <StarRating rating={value} onStarClick={onStarClick} />
+      ) : type === "location" ? (
+        <GooglePlacesAutocomplete
+          apiKey={process.env.REACT_APP_GOOGLE_API_KEY}
+          selectProps={{ value: location, onChange: setLocation }}
+        />
       ) : (
         <input type={type} value={value} onChange={onChange} />
       )}

@@ -4,6 +4,7 @@ import {
   faLocationDot,
   faPenToSquare,
   faTrash,
+  faCalendarDays,
 } from "@fortawesome/free-solid-svg-icons";
 import PopupContainer from "./layout/PopupContainer";
 import DishCard from "./DishCard";
@@ -15,7 +16,11 @@ import OtherImageCarousel from "./OtherImageCarousel";
 
 const Album = ({ data }) => {
   const { hidePopup, showEditAlbum } = usePopup();
-  const { deleteAlbum, setEditData, otherImages } = useAlbum();
+  const { deleteAlbum, setEditData } = useAlbum();
+
+  const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    data.location.label
+  )}&query_place_id=${data.location.value.place_id}`;
 
   const handleEdit = () => {
     showEditAlbum(data.albumId);
@@ -39,14 +44,20 @@ const Album = ({ data }) => {
           <div className="album-title">
             {data.name} <StarRating rating={data.rating} />
           </div>
-          <div className="album-location">
+          <div className="album-location" onClick={() => window.open(url)}>
             <FontAwesomeIcon
               icon={faLocationDot}
               style={{ fontSize: ".8rem" }}
             />{" "}
-            <span>{data.location}</span>
+            <span>{data.location.label}</span>
           </div>
-          <div>{data.date}</div>
+          <div className="album-date">
+            <FontAwesomeIcon
+              icon={faCalendarDays}
+              style={{ fontSize: ".8rem" }}
+            />
+            <span>{data.date}</span>
+          </div>
           <div className="album-body">
             <div className="dishlist-container">
               {data.dishList.map((dish) => {

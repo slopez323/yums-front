@@ -1,7 +1,7 @@
 import { useAlbum } from "../contexts/albumContext";
 import AlbumInput from "./AlbumInput";
 
-const CreateGeneralSection = ({ data }) => {
+const CreateGeneralSection = () => {
   const { general, coverPhoto, updateGeneralDetails } = useAlbum();
 
   return (
@@ -14,8 +14,9 @@ const CreateGeneralSection = ({ data }) => {
         />
         <AlbumInput
           label="Location"
+          type="location"
           value={general.location}
-          onChange={(e) => updateGeneralDetails("location", e.target.value)}
+          // onChange={(e) => updateGeneralDetails("location", e.target.value)}
         />
         <AlbumInput
           label="Date"

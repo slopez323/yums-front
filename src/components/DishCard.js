@@ -1,3 +1,5 @@
+import noimage from "../assets/noimage.jpeg";
+
 const DishCard = ({ dish }) => {
   const { name, image, rating } = dish;
 
@@ -7,7 +9,11 @@ const DishCard = ({ dish }) => {
         <div>{name}</div>
         <div>{rating}/5</div>
       </div>
-      <img src={image ? image.url : ""} alt={name} className="dishlist-image" />
+      <img
+        src={image ? image.url : noimage}
+        alt={name}
+        className="dishlist-image"
+      />
     </div>
   );
 };
