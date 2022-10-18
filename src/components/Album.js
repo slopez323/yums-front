@@ -14,7 +14,7 @@ import StarRating from "./StarRating";
 import { useAlbum } from "../contexts/albumContext";
 import OtherImageCarousel from "./OtherImageCarousel";
 
-const Album = ({ data }) => {
+const Album = ({ data, setError }) => {
   const { hidePopup, showEditAlbum } = usePopup();
   const { deleteAlbum, setEditData } = useAlbum();
 
@@ -29,15 +29,19 @@ const Album = ({ data }) => {
     setEditData(data);
   };
 
+  const handleDelete = async () => {
+    const response = await deleteAlbum(data.albumId);
+    if (response) {
+      setError({ show: true, message: response });
+    } else hidePopup();
+  };
+
   return (
     <PopupContainer>
       <Popup>
         <div className="album-actions">
           <FontAwesomeIcon icon={faPenToSquare} onClick={handleEdit} />
-          <FontAwesomeIcon
-            icon={faTrash}
-            onClick={() => deleteAlbum(data.albumId)}
-          />
+          <FontAwesomeIcon icon={faTrash} onClick={handleDelete} />
         </div>
         <div className="back-button" onClick={hidePopup}>
           <FontAwesomeIcon icon={faArrowLeft} />

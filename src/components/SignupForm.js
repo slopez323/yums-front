@@ -1,17 +1,22 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
 
-const SignupForm = () => {
-  const { checkDetails, hideError } = useAuth();
+const SignupForm = ({ setError }) => {
+  const { checkDetails } = useAuth();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    hideError();
-  }, []);
+  const handleRegistration = async () => {
+    const response = await checkDetails(username, email, password);
+    if (response) {
+      setError({ show: true, message: response });
+    } else {
+      navigate("/dash");
+    }
+  };
 
   return (
     <>
@@ -29,9 +34,7 @@ const SignupForm = () => {
         placeholder="Password"
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={() => checkDetails(username, email, password)}>
-        Sign Up
-      </button>
+      <button onClick={handleRegistration}>Sign Up</button>
       <div className="auth-switch">
         Already have an account?{" "}
         <span onClick={() => navigate("/login")}>Log in</span>

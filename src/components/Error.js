@@ -1,5 +1,5 @@
-const Error = ({ message }) => {
-  return <div className="login-error">{message}</div>;
+const Error = ({ children }) => {
+  return <div className="error-message">{children}</div>;
 };
 
 export default Error;

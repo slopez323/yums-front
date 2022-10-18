@@ -5,8 +5,22 @@ import CreateOthersSection from "./CreateOthersSection";
 import Popup from "./layout/Popup";
 import PopupContainer from "./layout/PopupContainer";
 
-const AddAlbum = ({ albumId }) => {
+const AddAlbum = ({ albumId, setError }) => {
   const { createAlbum, cancelCreate, editAlbum } = useAlbum();
+
+  const handleAlbumCreation = async () => {
+    const response = await createAlbum();
+    if (response) {
+      setError({ show: true, message: response });
+    }
+  };
+
+  const handleAlbumUpdate = async () => {
+    const response = await editAlbum(albumId);
+    if (response) {
+      setError({ show: true, message: response });
+    }
+  };
 
   return (
     <PopupContainer>
@@ -17,9 +31,9 @@ const AddAlbum = ({ albumId }) => {
         <div className="create-end-buttons">
           <button onClick={cancelCreate}>Cancel</button>
           {albumId ? (
-            <button onClick={() => editAlbum(albumId)}>Update Album</button>
+            <button onClick={handleAlbumUpdate}>Update Album</button>
           ) : (
-            <button onClick={createAlbum}>Create Album</button>
+            <button onClick={handleAlbumCreation}>Create Album</button>
           )}
         </div>
       </Popup>

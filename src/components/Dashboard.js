@@ -82,6 +82,9 @@ const Dashboard = () => {
             <RestaurantCard rest={rest} key={`${rest.name}-${rest.date}`} />
           );
         })}
+        {sortedList.length === 0 && (
+          <div className="empty-dashboard">No Albums.</div>
+        )}
       </div>
       <div className="add-button" title="new album" onClick={showNewAlbum}>
         <FontAwesomeIcon icon={faPlus} />

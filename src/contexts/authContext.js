@@ -1,53 +1,15 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
 const authContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const noError = { show: false, message: "" };
-  // const [token, setToken] = useState(null);
   const [userId, setUserId] = useState();
-  //   const [isAdmin, setIsAdmin] = useState(false);
-  const [authUpdate, setAuthUpdate] = useState();
   const [isAuthLoading, setIsAuthLoading] = useState(false);
-  const [error, setError] = useState({ ...noError });
-
-  // const verify = async () => {
-  //   setIsAuthLoading(true);
-  //   const url = `${urlEndpoint}/users/validate-token`;
-  //   const response = await fetch(url, {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       [process.env.REACT_APP_TOKEN_HEADER_KEY]: token,
-  //     },
-  //   });
-  //   const responseJSON = await response.json();
-  //   if (responseJSON.success) {
-  //     setUserId(responseJSON.message);
-  //     //   setIsAdmin(responseJSON.isAdmin);
-  //   } else removeUserToken();
-  //   setAuthUpdate(response);
-  //   setIsAuthLoading(false);
-  //   return responseJSON;
-  // };
-
-  // useEffect(() => {
-  //   const loggedUser = getUserToken();
-  //   setToken(loggedUser);
-  // }, [authUpdate]);
-
-  // useEffect(() => {
-  //   if (token) {
-  //     verify();
-  //   } else {
-  //     setUserId();
-  //     //   setIsAdmin(false);
-  //   }
-  // }, [token]);
+  const [authResponse, setAuthResponse] = useState();
 
   const checkLogin = async () => {
+    setIsAuthLoading(true);
     try {
       const url = `${urlEndpoint}/users/check-login`;
       const response = await fetch(url, {
@@ -55,27 +17,21 @@ export const AuthProvider = ({ children }) => {
         credentials: "include",
       });
       const responseJSON = await response.json();
-      if (responseJSON.user) setUserId(responseJSON.user);
+      if (responseJSON.success) {
+        setUserId(responseJSON.user);
+      } else setUserId();
     } catch (e) {
-      console.error(e);
+      setUserId();
     }
+    setIsAuthLoading(false);
   };
 
-  useEffect(() => {
-    checkLogin();
-  }, [isAuthLoading]);
-
-  const checkDetails = (username, email, password) => {
+  const checkDetails = async (username, email, password) => {
     if (username.length < 5) {
-      setError({
-        show: true,
-        message: "Username must be at least 5 characters long.",
-      });
-      return;
+      return "Username must be at least 5 characters long.";
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !email) {
-      setError({ show: true, message: "Enter a valid email." });
-      return;
+      return "Enter a valid email.";
     }
     if (
       !/\d/.test(password) ||
@@ -84,151 +40,110 @@ export const AuthProvider = ({ children }) => {
       password.length < 8 ||
       password.includes(" ")
     ) {
-      setError({
-        show: true,
-        message:
-          "Password must be at least 8 characters long, must not include spaces and must include at least 1 letter, number and special character.",
-      });
-      return;
+      return "Password must be at least 8 characters long, must not include spaces and must include at least 1 letter, number and special character.";
     }
-    setError({ ...noError });
-    register(username, email, password);
+    return await register(username, email, password);
   };
 
   const register = async (username, email, password) => {
     setIsAuthLoading(true);
-    const userDetails = { username, email, password };
-    const url = `${urlEndpoint}/users/register`;
-    const response = await fetch(url, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userDetails),
-    });
-    // const responseJSON = await response.json();
-    // if (responseJSON.success) {
-    //   setUserToken(responseJSON.token);
-    //   //   navigate("/dash");
-    // }
-    setAuthUpdate(response);
-    setIsAuthLoading(false);
-    return;
+    try {
+      const userDetails = { username, email, password };
+      const url = `${urlEndpoint}/users/register`;
+      const response = await fetch(url, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userDetails),
+      });
+      setAuthResponse(response);
+      const responseJSON = await response.json();
+      if (!responseJSON.success) {
+        return responseJSON.message;
+      }
+      setIsAuthLoading(false);
+      return;
+    } catch (e) {
+      setIsAuthLoading(false);
+      return "Unable to create account.  Try again.";
+    }
   };
 
   const login = async (email, password) => {
     setIsAuthLoading(true);
-    setError({ ...noError });
-    const userDetails = { email, password };
-    const url = `${urlEndpoint}/users/login`;
-    const response = await fetch(url, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userDetails),
-    });
-    // const responseJSON = await response.json();
-    // if (responseJSON.success) {
-    //   setUserToken(responseJSON.token);
-    //   //   navigate("/dash");
-    // } else {
-    //   setError({ show: true, message: responseJSON.message });
-    // }
-    setAuthUpdate(response);
-    setIsAuthLoading(false);
-    return;
+    try {
+      const userDetails = { email, password };
+      const url = `${urlEndpoint}/users/login`;
+      const response = await fetch(url, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userDetails),
+      });
+      setAuthResponse(response);
+      const responseJSON = await response.json();
+      if (!responseJSON.success) {
+        return responseJSON.message;
+      }
+      setIsAuthLoading(false);
+      return;
+    } catch (e) {
+      setIsAuthLoading(false);
+      return "Unable to log in.  Try again.";
+    }
   };
 
-  //   const changePassword = async (password) => {
-  //     setIsAuthLoading(true);
-  //     const userDetails = { userId, password };
-  //     const url = `${urlEndpoint}/users/change-password`;
-  //     const response = await fetch(url, {
-  //       method: "PUT",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(userDetails),
-  //     });
-  //     const responseJSON = await response.json();
-  //     setAuthUpdate(response);
-  //     setIsAuthLoading(false);
-  //     return responseJSON;
-  //   };
+  const logOut = async () => {
+    setIsAuthLoading(true);
+    try {
+      const url = `${urlEndpoint}/users/logout`;
+      const response = await fetch(url, {
+        method: "GET",
+        credentials: "include",
+      });
+      setAuthResponse(response);
+      setIsAuthLoading(false);
+      return;
+    } catch (e) {
+      setIsAuthLoading(false);
+      return "Unable to sign out.  Try again.";
+    }
+  };
 
-  //   const forgetPassword = async (email) => {
-  //     setIsAuthLoading(true);
-  //     const url = `${urlEndpoint}/users/forget-password`;
-  //     const response = await fetch(url, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ email }),
-  //     });
-  //     const responseJSON = await response.json();
-  //     setAuthUpdate(response);
-  //     setIsAuthLoading(false);
-  //     return responseJSON;
-  //   };
+  const deleteAccount = async () => {
+    setIsAuthLoading(true);
+    try {
+      const url = `${urlEndpoint}/users/delete-account`;
+      const response = await fetch(url, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      setAuthResponse(response);
+      setIsAuthLoading(false);
+    } catch (e) {
+      setIsAuthLoading(false);
+      return "Unable to delete account.  Try again.";
+    }
+  };
 
-  // const logout = () => {
-  //   removeUserToken();
-  //   setAuthUpdate("token removed");
-  //   return true;
-  // };
-
-  //   const deleteAccount = async () => {
-  //     setIsAuthLoading(true);
-  //     const url = `${urlEndpoint}/users/delete-user/${userId}`;
-  //     const response = await fetch(url, {
-  //       method: "DELETE",
-  //     });
-  //     const responseJSON = await response.json();
-  //     if (responseJSON.success) removeUserToken();
-  //     setAuthUpdate(response);
-  //     setIsAuthLoading(false);
-  //     return responseJSON;
-  //   };
-
-  const hideError = () => setError({ ...noError });
+  useEffect(() => {
+    checkLogin();
+  }, [authResponse]);
 
   const value = {
     userId,
-    // isAdmin,
     checkDetails,
     login,
-    // logout,
-    // changePassword,
-    // forgetPassword,
-    // deleteAccount,
+    logOut,
+    deleteAccount,
     isAuthLoading,
-    error,
-    hideError,
   };
 
   return <authContext.Provider value={value}>{children}</authContext.Provider>;
 };
 
 export const useAuth = () => useContext(authContext);
-
-// const setUserToken = (token) => {
-//   localStorage.setItem(
-//     process.env.REACT_APP_TOKEN_HEADER_KEY,
-//     JSON.stringify(token)
-//   );
-// };
-
-// const removeUserToken = () => {
-//   localStorage.removeItem(process.env.REACT_APP_TOKEN_HEADER_KEY);
-//   return true;
-// };
-
-// const getUserToken = () => {
-//   return JSON.parse(
-//     localStorage.getItem(process.env.REACT_APP_TOKEN_HEADER_KEY)
-//   );
-// };

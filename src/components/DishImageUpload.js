@@ -34,12 +34,7 @@ const DishImageUpload = ({ dish, index, albumId }) => {
       {!dish.image ? (
         <button onClick={showWidget}>Upload Image</button>
       ) : (
-        <ImageThumbNail
-          image={dish.image}
-          index={index}
-          albumId={albumId}
-          name={dish.name}
-        />
+        <ImageThumbNail image={dish.image} index={index} name={dish.name} />
       )}
     </div>
   );

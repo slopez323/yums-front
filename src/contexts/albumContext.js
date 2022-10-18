@@ -7,7 +7,7 @@ const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
 
 export const AlbumProvider = ({ children }) => {
   const { userId } = useAuth();
-  const { hidePopup } = usePopup();
+  const { hidePopup, showAlbum } = usePopup();
   const newDish = { name: "", image: null, rating: 5 };
   const initialGeneral = {
     name: "",
@@ -27,6 +27,8 @@ export const AlbumProvider = ({ children }) => {
 
   const [userData, setUserData] = useState();
   const [refreshData, setRefreshData] = useState();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const updateGeneralDetails = (key, value) => {
     setGeneral({ ...general, [key]: value });
@@ -51,14 +53,18 @@ export const AlbumProvider = ({ children }) => {
   };
 
   const deleteImage = async (id) => {
-    const url = `${urlEndpoint}/images/delete`;
-    const response = await fetch(url, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id }),
-    });
+    setIsLoading(true);
+    try {
+      const url = `${urlEndpoint}/images/delete`;
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+    } catch (e) {}
+    setIsLoading(false);
   };
 
   const addMoreDishes = () => {
@@ -80,76 +86,98 @@ export const AlbumProvider = ({ children }) => {
   };
 
   const deleteUnsavedImages = () => {
-    //do same on unmount of addalbum component
     imagesToUpload.forEach((img) => deleteImage(img.public_id));
   };
 
   const createAlbum = async () => {
-    const { name, location, date, rating } = general;
+    setIsLoading(true);
+    try {
+      const { name, location, date, rating } = general;
 
-    const albumDetails = {
-      name,
-      location,
-      coverPhoto,
-      date,
-      rating,
-      dishes,
-      otherImages,
-      notes,
-    };
-    const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
-    const url = `${urlEndpoint}/users/create-album`;
-    const response = await fetch(url, {
-      method: "PUT",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(albumDetails),
-    });
-    const responseJSON = await response.json();
-    if (responseJSON.success) {
-      if (imagesForDeletion.length > 0)
-        await Promise.all(
-          imagesForDeletion.forEach(async (id) => await deleteImage(id))
-        );
-      resetStates();
-      setRefreshData(response);
+      const albumDetails = {
+        name,
+        location,
+        coverPhoto,
+        date,
+        rating,
+        dishes,
+        otherImages,
+        notes,
+      };
+      const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
+      const url = `${urlEndpoint}/users/create-album`;
+      const response = await fetch(url, {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(albumDetails),
+      });
+      const responseJSON = await response.json();
+      if (responseJSON.success) {
+        if (imagesForDeletion.length > 0)
+          await Promise.all(
+            imagesForDeletion.forEach(async (id) => await deleteImage(id))
+          );
+        resetStates();
+        setRefreshData(response);
+        setIsLoading(false);
+        showAlbum(responseJSON.message);
+        return;
+      } else {
+        setIsLoading(false);
+        return "Unable to create album.  Try again.";
+      }
+    } catch (e) {
+      setIsLoading(false);
+      return "Unable to create album.  Try again.";
     }
   };
 
   const editAlbum = async (albumId) => {
-    const { name, location, date, rating } = general;
+    setIsLoading(true);
+    try {
+      const { name, location, date, rating } = general;
 
-    const albumDetails = {
-      albumId,
-      name,
-      location,
-      coverPhoto,
-      date,
-      rating,
-      dishes,
-      otherImages,
-      notes,
-    };
-    const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
-    const url = `${urlEndpoint}/users/edit-album`;
-    const response = await fetch(url, {
-      method: "PUT",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(albumDetails),
-    });
-    const responseJSON = await response.json();
-    if (responseJSON.success) {
-      if (imagesForDeletion.length > 0)
-        await Promise.all(
-          imagesForDeletion.forEach(async (id) => await deleteImage(id))
-        );
-      resetStates();
-      setRefreshData(response);
+      const albumDetails = {
+        albumId,
+        name,
+        location,
+        coverPhoto,
+        date,
+        rating,
+        dishes,
+        otherImages,
+        notes,
+      };
+      const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
+      const url = `${urlEndpoint}/users/edit-album`;
+      const response = await fetch(url, {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(albumDetails),
+      });
+      const responseJSON = await response.json();
+      if (responseJSON.success) {
+        if (imagesForDeletion.length > 0)
+          await Promise.all(
+            imagesForDeletion.forEach(async (id) => await deleteImage(id))
+          );
+        resetStates();
+        setRefreshData(response);
+        setIsLoading(false);
+        showAlbum(responseJSON.message);
+      } else {
+        setIsLoading(false);
+        return "Unable to update album.  Try again.";
+      }
+    } catch (e) {
+      setIsLoading(false);
+      return "Unable to update album.  Try again.";
     }
   };
 
@@ -189,45 +217,66 @@ export const AlbumProvider = ({ children }) => {
   };
 
   const getUserData = async () => {
-    const url = `${urlEndpoint}/users/user-data`;
-    const response = await fetch(url, {
-      method: "GET",
-      credentials: "include",
-    });
-    const responseJSON = await response.json();
-    if (responseJSON.success) setUserData(responseJSON.message);
+    setIsLoading(true);
+    try {
+      const url = `${urlEndpoint}/users/user-data`;
+      const response = await fetch(url, {
+        method: "GET",
+        credentials: "include",
+      });
+      const responseJSON = await response.json();
+      if (responseJSON.success) {
+        setUserData(responseJSON.message);
+      } else setUserData();
+    } catch (e) {
+      setUserData();
+    }
+    setIsLoading(false);
   };
 
   const deleteAlbum = async (albumId) => {
-    const album = userData.restaurantList.find(
-      (item) => item.albumId === albumId
-    );
-    const dishImages = album.dishList.reduce((filtered, dish) => {
-      if (dish.image) filtered.push(dish.image.public_id);
-      return filtered;
-    }, []);
-    const other = album.otherImages.map((img) => img.public_id);
-    const images = [...dishImages, ...other];
+    setIsLoading(true);
+    try {
+      const album = userData.restaurantList.find(
+        (item) => item.albumId === albumId
+      );
+      const dishImages = album.dishList.reduce((filtered, dish) => {
+        if (dish.image) filtered.push(dish.image.public_id);
+        return filtered;
+      }, []);
+      const other = album.otherImages.map((img) => img.public_id);
+      const images = [...dishImages, ...other];
 
-    const url = `${urlEndpoint}/users/delete-album`;
-    const response = await fetch(url, {
-      method: "DELETE",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ albumId }),
-    });
-    const responseJSON = await response.json();
-    if (responseJSON.success) {
-      images.forEach(async (img) => await deleteImage(img));
+      const url = `${urlEndpoint}/users/delete-album`;
+      const response = await fetch(url, {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ albumId }),
+      });
       setRefreshData(response);
-      resetStates();
+      const responseJSON = await response.json();
+      if (responseJSON.success) {
+        if (images.length > 0)
+          await Promise.all(
+            images.forEach(async (id) => await deleteImage(id))
+          );
+        setIsLoading(false);
+        return;
+      } else {
+        setIsLoading(false);
+        return "Unable to delete album.  Try again.";
+      }
+    } catch (e) {
+      setIsLoading(false);
+      return "Unable to delete album.  Try again.";
     }
   };
 
   useEffect(() => {
-    if (userId) getUserData();
+    getUserData();
   }, [userId, refreshData]);
 
   useEffect(() => {

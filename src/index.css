@@ -136,10 +136,16 @@ select:focus{
   cursor: pointer;
 }
 
-.login-error{
-  text-align: "center";
-  font-size: ".8rem";
-  color: "#c06c84" ;
+.error-message{
+  padding: 10px 20px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  border-left: 5px solid #247291;
+  border-radius: 5px;
+  color: #b5592a;
+
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .main-page{
@@ -156,6 +162,44 @@ header{
   align-items: center;
 }
 
+.username{
+  padding: 20px;
+  border-radius: 5px;
+  color: #596e79;
+  font-size: 1.1rem;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.account-menu{
+  padding: 20px;
+  background-color: #596e79;
+  color: #d8cfcf;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  border-radius: 5px;
+  z-index: 1;
+  position: absolute;
+  top:90px;
+  right: 30px;
+  font-size: .9rem;
+
+  display: grid;
+  gap: 10px;
+}
+
+.account-menu div{
+  cursor: pointer;
+  text-align: end;
+}
+
+.del-account{
+  font-size: .8rem;
+  color: #b5592a;
+}
+
 .overview{
   display: flex;
   justify-content: center;
@@ -165,6 +209,13 @@ header{
   background-color: #dfd3c3;
   padding: 20px;
   position: relative;
+}
+
+.empty-dashboard{
+  display: flex;
+  justify-content: center;
+  grid-column: 1/5;
+  font-size: 1.5rem;
 }
 
 .dashboard-options{
@@ -547,5 +598,9 @@ header{
   }
   .album-location span:hover{
     text-decoration: underline;
+  }
+  .username:hover{
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    font-size: 1.05rem;
   }
 }

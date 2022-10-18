@@ -2,7 +2,7 @@ import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAlbum } from "../contexts/albumContext";
 
-const ImageThumbNail = ({ image, name, albumId, index }) => {
+const ImageThumbNail = ({ image, name, index }) => {
   const { coverPhoto, chooseCoverPhoto, addImageForDeletion, updateDishes } =
     useAlbum();
 
