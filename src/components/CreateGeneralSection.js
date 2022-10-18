@@ -12,12 +12,7 @@ const CreateGeneralSection = () => {
           value={general.name}
           onChange={(e) => updateGeneralDetails("name", e.target.value)}
         />
-        <AlbumInput
-          label="Location"
-          type="location"
-          value={general.location}
-          // onChange={(e) => updateGeneralDetails("location", e.target.value)}
-        />
+        <AlbumInput label="Location" type="location" />
         <AlbumInput
           label="Date"
           type="date"

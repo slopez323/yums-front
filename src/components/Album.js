@@ -18,9 +18,11 @@ const Album = ({ data }) => {
   const { hidePopup, showEditAlbum } = usePopup();
   const { deleteAlbum, setEditData } = useAlbum();
 
-  const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    data.location.label
-  )}&query_place_id=${data.location.value.place_id}`;
+  const url = data.location
+    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+        data.location.label
+      )}&query_place_id=${data.location.value.place_id}`
+    : "";
 
   const handleEdit = () => {
     showEditAlbum(data.albumId);
@@ -49,7 +51,7 @@ const Album = ({ data }) => {
               icon={faLocationDot}
               style={{ fontSize: ".8rem" }}
             />{" "}
-            <span>{data.location.label}</span>
+            <span>{data.location ? data.location.label : ""}</span>
           </div>
           <div className="album-date">
             <FontAwesomeIcon

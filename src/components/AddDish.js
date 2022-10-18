@@ -4,23 +4,26 @@ import { useAlbum } from "../contexts/albumContext";
 import AlbumInput from "./AlbumInput";
 import DishImageUpload from "./DishImageUpload";
 
-const AddDish = ({ dish }) => {
-  const { updateDishes } = useAlbum();
+const AddDish = ({ dish, index, albumId }) => {
+  const { updateDishes, removeDishes } = useAlbum();
 
   return (
     <div>
-      <div className="dish-count">{`DISH ${dish.count}`}</div>
+      <div className="dish-count">{`DISH ${index + 1}`}</div>
       <div className="dish-details">
-        <FontAwesomeIcon icon={faSquareMinus} />
+        <FontAwesomeIcon
+          icon={faSquareMinus}
+          onClick={() => removeDishes(index)}
+        />
         <AlbumInput
           label="Dish Name"
           value={dish.name}
-          onChange={(e) => updateDishes(dish.count, "name", e.target.value)}
+          onChange={(e) => updateDishes(index, "name", e.target.value)}
         />
         <span className="dish-rating">
           <select
             value={dish.rating}
-            onChange={(e) => updateDishes(dish.count, "rating", e.target.value)}
+            onChange={(e) => updateDishes(index, "rating", e.target.value)}
           >
             <option value={5}>5</option>
             <option value={4}>4</option>
@@ -30,7 +33,7 @@ const AddDish = ({ dish }) => {
           </select>
           /5
         </span>
-        <DishImageUpload dish={dish} />
+        <DishImageUpload dish={dish} index={index} albumId={albumId} />
       </div>
     </div>
   );

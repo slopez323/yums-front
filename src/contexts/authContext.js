@@ -6,48 +6,64 @@ const authContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const noError = { show: false, message: "" };
-  const [token, setToken] = useState(null);
+  // const [token, setToken] = useState(null);
   const [userId, setUserId] = useState();
   //   const [isAdmin, setIsAdmin] = useState(false);
   const [authUpdate, setAuthUpdate] = useState();
   const [isAuthLoading, setIsAuthLoading] = useState(false);
   const [error, setError] = useState({ ...noError });
 
-  const navigate = useNavigate();
+  // const verify = async () => {
+  //   setIsAuthLoading(true);
+  //   const url = `${urlEndpoint}/users/validate-token`;
+  //   const response = await fetch(url, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       [process.env.REACT_APP_TOKEN_HEADER_KEY]: token,
+  //     },
+  //   });
+  //   const responseJSON = await response.json();
+  //   if (responseJSON.success) {
+  //     setUserId(responseJSON.message);
+  //     //   setIsAdmin(responseJSON.isAdmin);
+  //   } else removeUserToken();
+  //   setAuthUpdate(response);
+  //   setIsAuthLoading(false);
+  //   return responseJSON;
+  // };
 
-  const verify = async () => {
-    setIsAuthLoading(true);
-    const url = `${urlEndpoint}/users/validate-token`;
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        [process.env.REACT_APP_TOKEN_HEADER_KEY]: token,
-      },
-    });
-    const responseJSON = await response.json();
-    if (responseJSON.success) {
-      setUserId(responseJSON.message);
-      //   setIsAdmin(responseJSON.isAdmin);
-    } else removeUserToken();
-    setAuthUpdate(response);
-    setIsAuthLoading(false);
-    return responseJSON;
+  // useEffect(() => {
+  //   const loggedUser = getUserToken();
+  //   setToken(loggedUser);
+  // }, [authUpdate]);
+
+  // useEffect(() => {
+  //   if (token) {
+  //     verify();
+  //   } else {
+  //     setUserId();
+  //     //   setIsAdmin(false);
+  //   }
+  // }, [token]);
+
+  const checkLogin = async () => {
+    try {
+      const url = `${urlEndpoint}/users/check-login`;
+      const response = await fetch(url, {
+        method: "GET",
+        credentials: "include",
+      });
+      const responseJSON = await response.json();
+      if (responseJSON.user) setUserId(responseJSON.user);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   useEffect(() => {
-    const loggedUser = getUserToken();
-    setToken(loggedUser);
-  }, [authUpdate]);
-
-  useEffect(() => {
-    if (token) {
-      verify();
-    } else {
-      setUserId();
-      //   setIsAdmin(false);
-    }
-  }, [token]);
+    checkLogin();
+  }, [isAuthLoading]);
 
   const checkDetails = (username, email, password) => {
     if (username.length < 5) {
@@ -85,16 +101,17 @@ export const AuthProvider = ({ children }) => {
     const url = `${urlEndpoint}/users/register`;
     const response = await fetch(url, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(userDetails),
     });
-    const responseJSON = await response.json();
-    if (responseJSON.success) {
-      setUserToken(responseJSON.token);
-      //   navigate("/dash");
-    }
+    // const responseJSON = await response.json();
+    // if (responseJSON.success) {
+    //   setUserToken(responseJSON.token);
+    //   //   navigate("/dash");
+    // }
     setAuthUpdate(response);
     setIsAuthLoading(false);
     return;
@@ -107,18 +124,19 @@ export const AuthProvider = ({ children }) => {
     const url = `${urlEndpoint}/users/login`;
     const response = await fetch(url, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(userDetails),
     });
-    const responseJSON = await response.json();
-    if (responseJSON.success) {
-      setUserToken(responseJSON.token);
-      //   navigate("/dash");
-    } else {
-      setError({ show: true, message: responseJSON.message });
-    }
+    // const responseJSON = await response.json();
+    // if (responseJSON.success) {
+    //   setUserToken(responseJSON.token);
+    //   //   navigate("/dash");
+    // } else {
+    //   setError({ show: true, message: responseJSON.message });
+    // }
     setAuthUpdate(response);
     setIsAuthLoading(false);
     return;
@@ -157,11 +175,11 @@ export const AuthProvider = ({ children }) => {
   //     return responseJSON;
   //   };
 
-  const logout = () => {
-    removeUserToken();
-    setAuthUpdate("token removed");
-    return true;
-  };
+  // const logout = () => {
+  //   removeUserToken();
+  //   setAuthUpdate("token removed");
+  //   return true;
+  // };
 
   //   const deleteAccount = async () => {
   //     setIsAuthLoading(true);
@@ -183,7 +201,7 @@ export const AuthProvider = ({ children }) => {
     // isAdmin,
     checkDetails,
     login,
-    logout,
+    // logout,
     // changePassword,
     // forgetPassword,
     // deleteAccount,
@@ -197,20 +215,20 @@ export const AuthProvider = ({ children }) => {
 
 export const useAuth = () => useContext(authContext);
 
-const setUserToken = (token) => {
-  localStorage.setItem(
-    process.env.REACT_APP_TOKEN_HEADER_KEY,
-    JSON.stringify(token)
-  );
-};
+// const setUserToken = (token) => {
+//   localStorage.setItem(
+//     process.env.REACT_APP_TOKEN_HEADER_KEY,
+//     JSON.stringify(token)
+//   );
+// };
 
-const removeUserToken = () => {
-  localStorage.removeItem(process.env.REACT_APP_TOKEN_HEADER_KEY);
-  return true;
-};
+// const removeUserToken = () => {
+//   localStorage.removeItem(process.env.REACT_APP_TOKEN_HEADER_KEY);
+//   return true;
+// };
 
-const getUserToken = () => {
-  return JSON.parse(
-    localStorage.getItem(process.env.REACT_APP_TOKEN_HEADER_KEY)
-  );
-};
+// const getUserToken = () => {
+//   return JSON.parse(
+//     localStorage.getItem(process.env.REACT_APP_TOKEN_HEADER_KEY)
+//   );
+// };

@@ -2,10 +2,16 @@ import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAlbum } from "../contexts/albumContext";
 
-const ImageThumbNail = ({ image, name }) => {
-  const { coverPhoto, chooseCoverPhoto, deleteImage } = useAlbum();
+const ImageThumbNail = ({ image, name, albumId, index }) => {
+  const { coverPhoto, chooseCoverPhoto, addImageForDeletion, updateDishes } =
+    useAlbum();
 
   const selected = image.url === coverPhoto ? "selected" : "";
+
+  const handleImageDelete = () => {
+    addImageForDeletion(image.public_id);
+    updateDishes(index, "image", null);
+  };
 
   return (
     <div className="thumbnail">
@@ -15,10 +21,7 @@ const ImageThumbNail = ({ image, name }) => {
         className={selected}
         onClick={() => chooseCoverPhoto(image.url)}
       />
-      <FontAwesomeIcon
-        icon={faCircleXmark}
-        onClick={() => deleteImage(image.public_id)}
-      />
+      <FontAwesomeIcon icon={faCircleXmark} onClick={handleImageDelete} />
     </div>
   );
 };

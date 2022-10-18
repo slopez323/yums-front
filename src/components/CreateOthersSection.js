@@ -2,7 +2,7 @@ import { useAlbum } from "../contexts/albumContext";
 import ImageThumbNail from "./ImageThumbnail";
 
 const CreateOthersSection = ({ notes, setNotes, name }) => {
-  const { otherImages, addOtherImage } = useAlbum();
+  const { otherImages, addOtherImage, addImageForUpload } = useAlbum();
 
   const showWidget = () => {
     let widget = window.cloudinary.createUploadWidget(
@@ -24,6 +24,7 @@ const CreateOthersSection = ({ notes, setNotes, name }) => {
             };
           });
           addOtherImage([...newImages]);
+          addImageForUpload([...newImages]);
         }
       }
     );

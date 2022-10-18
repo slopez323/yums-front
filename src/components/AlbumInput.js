@@ -4,8 +4,8 @@ import { useAlbum } from "../contexts/albumContext";
 import StarRating from "./StarRating";
 
 const AlbumInput = ({ label, type, value, onChange }) => {
-  const { onStarClick, updateGeneralDetails } = useAlbum();
-  const [location, setLocation] = useState();
+  const { onStarClick, updateGeneralDetails, general } = useAlbum();
+  const [location, setLocation] = useState(general.location);
 
   useEffect(() => {
     updateGeneralDetails("location", location);

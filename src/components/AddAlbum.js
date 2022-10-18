@@ -12,7 +12,7 @@ const AddAlbum = ({ albumId }) => {
     <PopupContainer>
       <Popup style={{ padding: "20px" }}>
         <CreateGeneralSection />
-        <CreateDishSection />
+        <CreateDishSection albumId={albumId} />
         <CreateOthersSection />
         <div className="create-end-buttons">
           <button onClick={cancelCreate}>Cancel</button>
