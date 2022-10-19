@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
+import gif from "../assets/overview.gif";
 
 const Overview = () => {
   const { userId } = useAuth();
@@ -13,11 +14,9 @@ const Overview = () => {
   return (
     <div className="overview">
       <div>
-        <p>Food Diary.</p>
-        <p>Remember the yums.</p>
-      </div>
-      <div>
-        <img src="" alt="" />
+        <div>Food</div>
+        <img src={gif} alt="Yums" />
+        <div style={{ alignSelf: "flex-end" }}>Remembered</div>
       </div>
     </div>
   );

@@ -38,6 +38,10 @@ export const AlbumProvider = ({ children, setIsLoading }) => {
     setDishes(dishesCopy);
   };
 
+  const updateNotes = (text) => {
+    setNotes(text);
+  };
+
   const onStarClick = (i) => {
     setGeneral({ ...general, rating: i + 1 });
   };
@@ -312,6 +316,7 @@ export const AlbumProvider = ({ children, setIsLoading }) => {
     chooseCoverPhoto,
     updateGeneralDetails,
     updateDishes,
+    updateNotes,
     onStarClick,
     addMoreDishes,
     removeDishes,

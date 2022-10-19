@@ -4,7 +4,7 @@ const DishCard = ({ dish }) => {
   const { name, image, rating } = dish;
 
   return (
-    <div>
+    <div className="dishlist-item">
       <div className="dishlist-title">
         <div>{name}</div>
         <div>{rating}/5</div>

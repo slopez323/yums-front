@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useAlbum } from "../contexts/albumContext";
 import CreateDishSection from "./CreateDishSection";
 import CreateGeneralSection from "./CreateGeneralSection";
@@ -21,6 +22,10 @@ const AddAlbum = ({ albumId, setError }) => {
       setError({ show: true, message: response });
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <PopupContainer>

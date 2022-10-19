@@ -19,9 +19,7 @@ const LoginPage = ({ error, isLoading }) => {
       <div className="logo" style={{ fontSize: "6rem" }}>
         Yums
       </div>
-      <div
-        style={{ height: "50vh", width: "2px", backgroundColor: "gray" }}
-      ></div>
+      <div className="login-divider"></div>
       <div className="login-right">
         <div className="login-form">
           <Outlet />

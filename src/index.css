@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Marck+Script&family=Ms+Madi&family=Sacramento&family=Yesteryear&family=Roboto+Condensed:wght@400;700&family=Caveat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ms+Madi&family=Fasthand&family=Roboto+Condensed:wght@400;700&family=Caveat&display=swap');
 
 :root{
   font-size: 16px;
@@ -19,7 +19,7 @@ body {
 
 .loading-container{
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   position: absolute;
   z-index: 3;
   background-color: #dfd3c389;
@@ -71,6 +71,12 @@ body {
     gap: 30px;
 }
 
+.login-divider{
+  height: 50vh;
+  width: 2px;
+  background-color: gray;
+}
+
 .login-right{
   width: 250px;
   display: flex;
@@ -93,10 +99,7 @@ body {
 }
 
 .logo{
-  /* font-family: 'Marck Script', cursive; */
   font-family: 'Ms Madi', cursive;
-   /* font-family: 'Sacramento', cursive; */
-  /* font-family: 'Yesteryear', cursive; */
 }
 
 input{
@@ -247,7 +250,21 @@ header{
 
 .overview{
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  font-family: 'Fasthand', cursive;
+  font-size: 3rem;
+  color: #8d8d8d;
+}
+
+.overview>div{
+  display: flex;
+  flex-direction: column;
+}
+
+.overview img{
+  height: 60%;
 }
 
 .dashboard{
@@ -293,7 +310,7 @@ header{
 }
 
 .search input{
-  width: 250px;
+  max-width: 250px;
   height: 30px;
 }
 
@@ -348,6 +365,10 @@ header{
   top: 0;
   left: 0;
   z-index: 1;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .popup-container.confirm{
@@ -356,15 +377,13 @@ header{
 
 .popup{
   width: 95%;
-  height: 90%;
+  height: max-content;
   box-sizing: border-box;
   padding: 20px;
   background-color: white;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin-top: 10px;
   overflow: auto;
+
   display: flex;
   flex-direction: column;
 }
@@ -462,6 +481,10 @@ header{
   grid-template-columns: auto 1fr;
 }
 
+.dish-rating{
+  display: flex;
+}
+
 .dish-rating, .dish-rating select{
   font-size: 1.2rem;
 }
@@ -511,11 +534,24 @@ header{
   display: flex;
 }
 
-.back-button{
-  padding: 10px;
-  align-self: flex-start;
-  border-radius: 50%;
+.album-actions{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.album-actions svg{
+  padding: 8px;
+  margin: 0 5px; 
   cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.back-button{
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
   color: #596e79;
   font-size: 1.5rem;
 
@@ -539,39 +575,33 @@ header{
   color: #247291; 
 }
 
-.album-actions{
-  position: absolute;
-  top: 10px;
-  right: 10px;
-
-  display: flex;
-  flex-direction: column;
-}
-
-.album-actions svg{
-  padding: 8px 0;
-  cursor: pointer;
-  font-size: 1.2rem;
-}
-
 .album-title{
   font-size: 1.4rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
   gap: 10px;
   align-items: center;
 }
 
 .album-body{
+  width: 100%;
+
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 20px;
 }
 
 .dishlist-container{
+  width: 100%;
   padding: 10px 0;
+
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 10px;
+}
+
+.dishlist-item{
+  height: max-content;
 }
 
 .dishlist-title{
@@ -605,10 +635,12 @@ header{
   padding: 10px;
   font-family: Caveat;
   font-size: 1.2rem;
-  white-space: pre;
+  white-space: pre-wrap;
 }
 
 .carousel{
+  grid-column: 1/3;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -691,7 +723,52 @@ header{
 }
 
 @media (max-width: 768px){
+  :root{
+    font-size: 14px;
+  }
   .username{
     padding-right: 0;
+  }
+  .create-general-section{
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    gap: 10px;
+  }
+  .create-cover{
+    grid-row: 1;
+  }
+  .album-input{
+    grid-template-columns: 100px 1fr;
+  }
+  .create-dish-section{
+    padding: 25px 0;
+  }
+  .create-dish-section label{
+    font-size: .8rem;
+  }
+  .dish-rating, .dish-rating select{
+    font-size: 1rem;
+  }
+  .thumbnail{
+    height: 40px;
+  }
+  .create-dish-section button{
+    align-self: center;
+  }
+  .album-view{
+    padding: 0;
+  }
+  .album-body{
+    grid-template-columns: 1fr;
+  }
+  .carousel{
+    grid-column: auto;
+  }
+  .login-page{
+    flex-direction: column;
+  }
+  .login-divider{
+    width: 60vw;
+    height: 2px;
   }
 }

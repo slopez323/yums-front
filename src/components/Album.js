@@ -13,6 +13,7 @@ import Popup from "./layout/Popup";
 import StarRating from "./StarRating";
 import { useAlbum } from "../contexts/albumContext";
 import OtherImageCarousel from "./OtherImageCarousel";
+import { useEffect } from "react";
 
 const Album = ({ data, setShowConfirm }) => {
   const { hidePopup, showEditAlbum } = usePopup();
@@ -33,15 +34,21 @@ const Album = ({ data, setShowConfirm }) => {
     setShowConfirm({ show: true, type: "delete-album", albumId: data.albumId });
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <PopupContainer>
       <Popup>
         <div className="album-actions">
-          <FontAwesomeIcon icon={faPenToSquare} onClick={handleEdit} />
-          <FontAwesomeIcon icon={faTrash} onClick={handleDelete} />
-        </div>
-        <div className="back-button" onClick={hidePopup}>
-          <FontAwesomeIcon icon={faArrowLeft} />
+          <div className="back-button" onClick={hidePopup}>
+            <FontAwesomeIcon icon={faArrowLeft} />
+          </div>
+          <div>
+            <FontAwesomeIcon icon={faPenToSquare} onClick={handleEdit} />
+            <FontAwesomeIcon icon={faTrash} onClick={handleDelete} />
+          </div>
         </div>
         <div className="album-view">
           <div className="album-title">
@@ -72,9 +79,9 @@ const Album = ({ data, setShowConfirm }) => {
               <div>{data.notes}</div>
             </div>
             {data.otherImages.length > 0 && (
-              <div>
-                <OtherImageCarousel images={data.otherImages} />
-              </div>
+              // <div>
+              <OtherImageCarousel images={data.otherImages} />
+              // </div>
             )}
           </div>
         </div>
