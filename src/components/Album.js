@@ -14,9 +14,9 @@ import StarRating from "./StarRating";
 import { useAlbum } from "../contexts/albumContext";
 import OtherImageCarousel from "./OtherImageCarousel";
 
-const Album = ({ data, setError }) => {
+const Album = ({ data, setShowConfirm }) => {
   const { hidePopup, showEditAlbum } = usePopup();
-  const { deleteAlbum, setEditData } = useAlbum();
+  const { setEditData } = useAlbum();
 
   const url = data.location
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -29,11 +29,8 @@ const Album = ({ data, setError }) => {
     setEditData(data);
   };
 
-  const handleDelete = async () => {
-    const response = await deleteAlbum(data.albumId);
-    if (response) {
-      setError({ show: true, message: response });
-    } else hidePopup();
+  const handleDelete = () => {
+    setShowConfirm({ show: true, type: "delete-album", albumId: data.albumId });
   };
 
   return (

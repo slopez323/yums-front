@@ -25,9 +25,10 @@ const Dashboard = () => {
       const filtered = restaurants.filter((restaurant) => {
         return (
           restaurant.name.toLowerCase().includes(search.toLowerCase()) ||
-          restaurant.location.label
-            .toLowerCase()
-            .includes(search.toLowerCase()) ||
+          (restaurant.location &&
+            restaurant.location.label
+              .toLowerCase()
+              .includes(search.toLowerCase())) ||
           restaurant.date.includes(search.toLowerCase()) ||
           restaurant.notes.toLowerCase().includes(search.toLowerCase()) ||
           restaurant.dishList.some((dish) =>
@@ -40,7 +41,7 @@ const Dashboard = () => {
   }, [search, restaurants]);
 
   useEffect(() => {
-    const sortCopy = [...filteredList];
+    const sortCopy = JSON.parse(JSON.stringify(filteredList));
     if (sort === "date-asc") {
       sortCopy.sort((a, b) => new Date(a.date) - new Date(b.date));
     } else if (sort === "date-desc") {
@@ -61,6 +62,9 @@ const Dashboard = () => {
     <div className="dashboard">
       {popup}
       <div className="dashboard-options">
+        <div className="add-button" title="new album" onClick={showNewAlbum}>
+          <FontAwesomeIcon icon={faPlus} />
+        </div>
         <div className="search">
           <input
             placeholder="Search"
@@ -78,17 +82,15 @@ const Dashboard = () => {
       </div>
       <div className="dashboard-main">
         {sortedList.map((rest) => {
-          return (
-            <RestaurantCard rest={rest} key={`${rest.name}-${rest.date}`} />
-          );
+          return <RestaurantCard rest={rest} key={rest.albumId} />;
         })}
         {sortedList.length === 0 && (
           <div className="empty-dashboard">No Albums.</div>
         )}
       </div>
-      <div className="add-button" title="new album" onClick={showNewAlbum}>
+      {/* <div className="add-button" title="new album" onClick={showNewAlbum}>
         <FontAwesomeIcon icon={faPlus} />
-      </div>
+      </div> */}
     </div>
   );
 };

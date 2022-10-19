@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authContext";
 import Error from "../Error";
+import Loading from "../Loading";
 
-const LoginPage = ({ error }) => {
+const LoginPage = ({ error, isLoading }) => {
   const { userId } = useAuth();
   const navigate = useNavigate();
 
@@ -13,6 +14,7 @@ const LoginPage = ({ error }) => {
 
   return (
     <div className="login-page">
+      {isLoading && <Loading />}
       {error.show && <Error>{error.message}</Error>}
       <div className="logo" style={{ fontSize: "6rem" }}>
         Yums

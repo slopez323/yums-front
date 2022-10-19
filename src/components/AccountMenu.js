@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 import { useAuth } from "../contexts/authContext";
 
-const AccountMenu = ({ setShowAccountMenu, setError }) => {
-  const { logOut, deleteAccount } = useAuth();
+const AccountMenu = ({ setShowAccountMenu, setError, setShowConfirm }) => {
+  const { logOut } = useAuth();
   const menuRef = useRef();
 
   const onSignOut = async () => {
@@ -15,12 +15,7 @@ const AccountMenu = ({ setShowAccountMenu, setError }) => {
   };
 
   const onDeleteAccount = async () => {
-    const response = await deleteAccount();
-    if (response) {
-      setError({ show: true, message: response });
-    } else {
-      setShowAccountMenu(false);
-    }
+    setShowConfirm({ show: true, type: "delete-account" });
   };
 
   const handleClickOutside = (e) => {

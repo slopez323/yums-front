@@ -35,7 +35,9 @@ const OtherImageCarousel = ({ images }) => {
         <span className="arrow" onClick={() => prevImage()}>
           <FontAwesomeIcon icon={faBackwardStep} />
         </span>
-        <img src={images[currentImage].url} alt="" />
+        <div className="carousel-polaroid">
+          <img src={images[currentImage].url} alt="" />
+        </div>
         <span className="arrow" onClick={() => nextImage()}>
           <FontAwesomeIcon icon={faForwardStep} />
         </span>

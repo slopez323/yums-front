@@ -3,13 +3,12 @@ import { createContext, useContext, useState, useEffect } from "react";
 const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
 const authContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children, setIsLoading }) => {
   const [userId, setUserId] = useState();
-  const [isAuthLoading, setIsAuthLoading] = useState(false);
   const [authResponse, setAuthResponse] = useState();
 
   const checkLogin = async () => {
-    setIsAuthLoading(true);
+    setIsLoading(true);
     try {
       const url = `${urlEndpoint}/users/check-login`;
       const response = await fetch(url, {
@@ -23,7 +22,7 @@ export const AuthProvider = ({ children }) => {
     } catch (e) {
       setUserId();
     }
-    setIsAuthLoading(false);
+    setIsLoading(false);
   };
 
   const checkDetails = async (username, email, password) => {
@@ -46,7 +45,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (username, email, password) => {
-    setIsAuthLoading(true);
+    setIsLoading(true);
     try {
       const userDetails = { username, email, password };
       const url = `${urlEndpoint}/users/register`;
@@ -63,16 +62,16 @@ export const AuthProvider = ({ children }) => {
       if (!responseJSON.success) {
         return responseJSON.message;
       }
-      setIsAuthLoading(false);
+      setIsLoading(false);
       return;
     } catch (e) {
-      setIsAuthLoading(false);
+      setIsLoading(false);
       return "Unable to create account.  Try again.";
     }
   };
 
   const login = async (email, password) => {
-    setIsAuthLoading(true);
+    setIsLoading(true);
     try {
       const userDetails = { email, password };
       const url = `${urlEndpoint}/users/login`;
@@ -89,16 +88,16 @@ export const AuthProvider = ({ children }) => {
       if (!responseJSON.success) {
         return responseJSON.message;
       }
-      setIsAuthLoading(false);
+      setIsLoading(false);
       return;
     } catch (e) {
-      setIsAuthLoading(false);
+      setIsLoading(false);
       return "Unable to log in.  Try again.";
     }
   };
 
   const logOut = async () => {
-    setIsAuthLoading(true);
+    setIsLoading(true);
     try {
       const url = `${urlEndpoint}/users/logout`;
       const response = await fetch(url, {
@@ -106,16 +105,16 @@ export const AuthProvider = ({ children }) => {
         credentials: "include",
       });
       setAuthResponse(response);
-      setIsAuthLoading(false);
+      setIsLoading(false);
       return;
     } catch (e) {
-      setIsAuthLoading(false);
+      setIsLoading(false);
       return "Unable to sign out.  Try again.";
     }
   };
 
   const deleteAccount = async () => {
-    setIsAuthLoading(true);
+    setIsLoading(true);
     try {
       const url = `${urlEndpoint}/users/delete-account`;
       const response = await fetch(url, {
@@ -123,9 +122,9 @@ export const AuthProvider = ({ children }) => {
         credentials: "include",
       });
       setAuthResponse(response);
-      setIsAuthLoading(false);
+      setIsLoading(false);
     } catch (e) {
-      setIsAuthLoading(false);
+      setIsLoading(false);
       return "Unable to delete account.  Try again.";
     }
   };
@@ -140,7 +139,6 @@ export const AuthProvider = ({ children }) => {
     login,
     logOut,
     deleteAccount,
-    isAuthLoading,
   };
 
   return <authContext.Provider value={value}>{children}</authContext.Provider>;

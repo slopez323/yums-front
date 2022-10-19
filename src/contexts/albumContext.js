@@ -5,7 +5,7 @@ import { usePopup } from "./popupContext";
 const albumContext = createContext();
 const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
 
-export const AlbumProvider = ({ children }) => {
+export const AlbumProvider = ({ children, setIsLoading }) => {
   const { userId } = useAuth();
   const { hidePopup, showAlbum } = usePopup();
   const newDish = { name: "", image: null, rating: 5 };
@@ -27,8 +27,6 @@ export const AlbumProvider = ({ children }) => {
 
   const [userData, setUserData] = useState();
   const [refreshData, setRefreshData] = useState();
-
-  const [isLoading, setIsLoading] = useState(false);
 
   const updateGeneralDetails = (key, value) => {
     setGeneral({ ...general, [key]: value });
@@ -264,6 +262,7 @@ export const AlbumProvider = ({ children }) => {
             images.forEach(async (id) => await deleteImage(id))
           );
         setIsLoading(false);
+        hidePopup();
         return;
       } else {
         setIsLoading(false);

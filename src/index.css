@@ -17,6 +17,51 @@ body {
   grid-template-rows: 1fr;
 }
 
+.loading-container{
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 3;
+  background-color: #dfd3c389;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-box{
+  position: relative;
+  background-color: #0d172a;
+  border: 2px solid #0d172a;
+  height: 8rem;
+  width: 8rem;
+  outline: none;
+  overflow: hidden;
+}
+
+.loading-box::before{
+  content: "Y";
+  font-family: 'Ms Madi', cursive;
+  color: #d8cfcf;
+  font-size: 5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+}
+
+.loading-box::after{
+  content: "";
+  position: absolute;
+  bottom: -50%;
+  left: -50%;
+  height: 200%;
+  width: 200% ;
+  background-color: #dfd3c389;
+  border-radius: 45%;
+  animation: spin 5s ease-in-out infinite;
+}
+
 .login-page{
     height: 100vh;
     width: 100vw;
@@ -180,7 +225,7 @@ header{
   color: #d8cfcf;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   border-radius: 5px;
-  z-index: 1;
+  z-index: 3;
   position: absolute;
   top:90px;
   right: 30px;
@@ -221,13 +266,29 @@ header{
 .dashboard-options{
   margin-bottom: 10px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 15px;
 }
 
-.search{
+.add-button{
+  padding: 12px;
+  background-color:#596e79;
+  border-radius: 50%;
+  color:#f0ece2;
+  font-size: 1.5rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  cursor: pointer;
+
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+
+.search{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   gap: 5px;
 }
 
@@ -289,6 +350,10 @@ header{
   z-index: 1;
 }
 
+.popup-container.confirm{
+  z-index: 2;
+}
+
 .popup{
   width: 95%;
   height: 90%;
@@ -304,21 +369,24 @@ header{
   flex-direction: column;
 }
 
-.add-button{
-  padding: 15px;
-  background-color:#596e79;
-  border-radius: 50%;
-  color:#f0ece2;
-  font-size: 1.8rem;
+.confirm-popup{
   position: absolute;
-  bottom: 20px;
-  right: 20px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  cursor: pointer;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #8d8d8d;
+  padding: 20px;
+  border-radius: 5px;
+  font-size: 1.2rem;
 
+  display: grid;
+  justify-items: center;
+  gap: 20px;
+}
+
+.confirm-popup div{
   display: flex;
-  align-items: center;
-  justify-content: center;
+  gap: 10px;
 }
 
 .album-input{
@@ -549,19 +617,27 @@ header{
 
 .carousel-main{
   position: relative;
-  height: 300px;
+  height: 400px;
 
   display: flex;
+  gap: 5px;
 }
 
-.carousel img{
-  height: 300px;
+.carousel-polaroid{
+  height: 100%;
+  box-sizing: border-box;
+  padding: 10px 10px 50px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+
+.carousel-polaroid img{
+  height: 100%;
 }
 
 .arrow{
   font-size: 1.5rem;
   cursor: pointer;
-  color: #1e293b;
+  color:#596e79;
 
   display: flex;
   align-items: center;
@@ -602,5 +678,20 @@ header{
   .username:hover{
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     font-size: 1.05rem;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: translateY(75%) rotate(0deg);
+  }
+  100% {
+    transform: translateY(20%) rotate(600deg);
+  }
+}
+
+@media (max-width: 768px){
+  .username{
+    padding-right: 0;
   }
 }

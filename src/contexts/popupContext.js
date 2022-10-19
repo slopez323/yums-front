@@ -17,7 +17,7 @@ const popupReducer = (state, action) => {
     return empty;
   }
   if (action.type === POPUP_TYPES.ALBUM) {
-    return <Album data={action.data} setError={action.setError} />;
+    return <Album data={action.data} setShowConfirm={action.setShowConfirm} />;
   }
   if (action.type === POPUP_TYPES.NEW_ALBUM) {
     return <AddAlbum setError={action.setError} />;
@@ -28,12 +28,16 @@ const popupReducer = (state, action) => {
   return state;
 };
 
-export const PopupProvider = ({ children, setError }) => {
+export const PopupProvider = ({ children, setError, setShowConfirm }) => {
   const [popup, popupDispatcher] = useReducer(popupReducer, empty);
 
   const hidePopup = () => popupDispatcher({ type: POPUP_TYPES.HIDE });
   const showAlbum = (data) =>
-    popupDispatcher({ type: POPUP_TYPES.ALBUM, data, setError });
+    popupDispatcher({
+      type: POPUP_TYPES.ALBUM,
+      data,
+      setShowConfirm,
+    });
   const showNewAlbum = () =>
     popupDispatcher({ type: POPUP_TYPES.NEW_ALBUM, setError });
   const showEditAlbum = (albumId) =>

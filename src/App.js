@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 const App = () => {
   const noError = { show: false, message: "" };
   const [error, setError] = useState(noError);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const hideError = setTimeout(() => {
@@ -21,16 +22,26 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <AuthProvider>
+      <AuthProvider setIsLoading={setIsLoading}>
         <Routes>
           <Route
             path="/"
-            element={<MainPage error={error} setError={setError} />}
+            element={
+              <MainPage
+                error={error}
+                setError={setError}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+              />
+            }
           >
             <Route index element={<Overview />} />
             <Route path="dash" element={<Dashboard />} />
           </Route>
-          <Route path="/login" element={<LoginPage error={error} />}>
+          <Route
+            path="/login"
+            element={<LoginPage error={error} isLoading={isLoading} />}
+          >
             <Route index element={<LoginForm setError={setError} />} />
             <Route
               path="register"

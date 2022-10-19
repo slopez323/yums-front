@@ -1,5 +1,5 @@
-const PopupContainer = ({ children }) => {
-  return <div className="popup-container">{children}</div>;
+const PopupContainer = ({ children, className }) => {
+  return <div className={`popup-container ${className}`}>{children}</div>;
 };
 
 export default PopupContainer;
