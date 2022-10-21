@@ -88,9 +88,6 @@ const Dashboard = () => {
           <div className="empty-dashboard">No Albums.</div>
         )}
       </div>
-      {/* <div className="add-button" title="new album" onClick={showNewAlbum}>
-        <FontAwesomeIcon icon={faPlus} />
-      </div> */}
     </div>
   );
 };

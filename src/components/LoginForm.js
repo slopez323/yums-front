@@ -28,6 +28,7 @@ const LoginForm = ({ setError }) => {
         type="password"
         placeholder="Password"
         onChange={(e) => setPassword(e.target.value)}
+        onKeyPress={(e) => e.key === "Enter" && handleLogin()}
       />
       <button onClick={handleLogin}>Log In</button>
       <div className="auth-switch">

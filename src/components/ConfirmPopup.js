@@ -1,13 +1,8 @@
 import { useAlbum } from "../contexts/albumContext";
 import { useAuth } from "../contexts/authContext";
-import PopupContainer from "./layout/PopupContainer";
+import PopupContainer from "./PopupContainer";
 
-const ConfirmPopup = ({
-  showConfirm,
-  setShowConfirm,
-  setError,
-  setShowAccountMenu,
-}) => {
+const ConfirmPopup = ({ showConfirm, setShowConfirm, setError }) => {
   const { deleteAlbum } = useAlbum();
   const { deleteAccount } = useAuth();
 
@@ -33,7 +28,6 @@ const ConfirmPopup = ({
           type: "",
           albumId: "",
         });
-        setShowAccountMenu(false);
       }
     }
   };

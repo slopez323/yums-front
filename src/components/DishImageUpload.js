@@ -8,9 +8,8 @@ const DishImageUpload = ({ dish, index, albumId }) => {
     let widget = window.cloudinary.createUploadWidget(
       {
         cloudName: process.env.REACT_APP_CLOUD_NAME,
-        sources: ["local", "url", "google_drive"],
+        sources: ["local", "url"],
         uploadPreset: process.env.REACT_APP_UPLOAD_PRESET,
-        cropping: true,
         maxFiles: 1,
         folder: "yums",
         clientAllowedFormats: "image",

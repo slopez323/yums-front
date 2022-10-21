@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { useAlbum } from "../../contexts/albumContext";
+import { useAlbum } from "../contexts/albumContext";
 
 const Header = ({ setShowAccountMenu }) => {
   const { userData } = useAlbum();

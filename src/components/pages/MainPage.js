@@ -6,7 +6,7 @@ import { PopupProvider } from "../../contexts/popupContext";
 import AccountMenu from "../AccountMenu";
 import ConfirmPopup from "../ConfirmPopup";
 import Error from "../Error";
-import Header from "../layout/Header";
+import Header from "../Header";
 import Loading from "../Loading";
 
 const MainPage = ({ error, setError, isLoading, setIsLoading }) => {
@@ -44,7 +44,6 @@ const MainPage = ({ error, setError, isLoading, setIsLoading }) => {
               showConfirm={showConfirm}
               setShowConfirm={setShowConfirm}
               setError={setError}
-              setShowAccountMenu={setShowAccountMenu}
             />
           )}
           <Outlet />

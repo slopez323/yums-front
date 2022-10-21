@@ -33,6 +33,7 @@ const SignupForm = ({ setError }) => {
         type="password"
         placeholder="Password"
         onChange={(e) => setPassword(e.target.value)}
+        onKeyPress={(e) => e.key === "Enter" && handleRegistration()}
       />
       <button onClick={handleRegistration}>Sign Up</button>
       <div className="auth-switch">

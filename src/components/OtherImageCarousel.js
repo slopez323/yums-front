@@ -24,11 +24,6 @@ const OtherImageCarousel = ({ images }) => {
     }
   };
 
-  //   const handlers = useSwipeable({
-  //     onSwipedLeft: () => nextImage(),
-  //     onSwipedRight: () => prevImage(),
-  //   });
-
   return (
     <div className="carousel">
       <div className="carousel-main">
@@ -42,19 +37,6 @@ const OtherImageCarousel = ({ images }) => {
           <FontAwesomeIcon icon={faForwardStep} />
         </span>
       </div>
-      {/* <div className="pages">
-          {otherImages.map((Image, index) => {
-            return (
-              <PageDots
-                Image={Image}
-                index={index}
-                currentImage={currentImage}
-                setCurrentImage={setCurrentImage}
-                key={index}
-              />
-            );
-          })}
-        </div> */}
     </div>
   );
 };

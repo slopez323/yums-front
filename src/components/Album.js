@@ -6,10 +6,10 @@ import {
   faTrash,
   faCalendarDays,
 } from "@fortawesome/free-solid-svg-icons";
-import PopupContainer from "./layout/PopupContainer";
+import PopupContainer from "./PopupContainer";
 import DishCard from "./DishCard";
 import { usePopup } from "../contexts/popupContext";
-import Popup from "./layout/Popup";
+import Popup from "./Popup";
 import StarRating from "./StarRating";
 import { useAlbum } from "../contexts/albumContext";
 import OtherImageCarousel from "./OtherImageCarousel";
@@ -79,9 +79,7 @@ const Album = ({ data, setShowConfirm }) => {
               <div>{data.notes}</div>
             </div>
             {data.otherImages.length > 0 && (
-              // <div>
               <OtherImageCarousel images={data.otherImages} />
-              // </div>
             )}
           </div>
         </div>

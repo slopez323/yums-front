@@ -3,8 +3,8 @@ import { useAlbum } from "../contexts/albumContext";
 import CreateDishSection from "./CreateDishSection";
 import CreateGeneralSection from "./CreateGeneralSection";
 import CreateOthersSection from "./CreateOthersSection";
-import Popup from "./layout/Popup";
-import PopupContainer from "./layout/PopupContainer";
+import Popup from "./Popup";
+import PopupContainer from "./PopupContainer";
 
 const AddAlbum = ({ albumId, setError }) => {
   const { createAlbum, cancelCreate, editAlbum } = useAlbum();

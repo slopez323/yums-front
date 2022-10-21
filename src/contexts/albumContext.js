@@ -51,7 +51,7 @@ export const AlbumProvider = ({ children, setIsLoading }) => {
   };
 
   const addImageForUpload = (imgArr) => {
-    setImagesToUpload([...imagesToUpload, ...imgArr]);
+    setImagesToUpload((prevState) => [...prevState, ...imgArr]);
   };
 
   const deleteImage = async (id) => {
@@ -79,8 +79,12 @@ export const AlbumProvider = ({ children, setIsLoading }) => {
     setDishes(dishesCopy);
   };
 
-  const addOtherImage = (img) => {
-    setOtherImages([...otherImages, ...img]);
+  const addOtherImage = (imgArr) => {
+    setOtherImages((prevState) => [...prevState, ...imgArr]);
+  };
+
+  const removeOtherImage = (imgToRemove) => {
+    setOtherImages(otherImages.filter((image) => image !== imgToRemove));
   };
 
   const chooseCoverPhoto = (url) => {
@@ -118,10 +122,12 @@ export const AlbumProvider = ({ children, setIsLoading }) => {
       });
       const responseJSON = await response.json();
       if (responseJSON.success) {
-        if (imagesForDeletion.length > 0)
-          await Promise.all(
-            imagesForDeletion.forEach(async (id) => await deleteImage(id))
-          );
+        try {
+          if (imagesForDeletion.length > 0)
+            await Promise.all(
+              imagesForDeletion.forEach(async (id) => await deleteImage(id))
+            );
+        } catch (e) {}
         resetStates();
         setRefreshData(response);
         setIsLoading(false);
@@ -165,10 +171,12 @@ export const AlbumProvider = ({ children, setIsLoading }) => {
       });
       const responseJSON = await response.json();
       if (responseJSON.success) {
-        if (imagesForDeletion.length > 0)
-          await Promise.all(
-            imagesForDeletion.forEach(async (id) => await deleteImage(id))
-          );
+        try {
+          if (imagesForDeletion.length > 0)
+            await Promise.all(
+              imagesForDeletion.forEach(async (id) => await deleteImage(id))
+            );
+        } catch (e) {}
         resetStates();
         setRefreshData(response);
         setIsLoading(false);
@@ -258,13 +266,15 @@ export const AlbumProvider = ({ children, setIsLoading }) => {
         },
         body: JSON.stringify({ albumId }),
       });
-      setRefreshData(response);
       const responseJSON = await response.json();
       if (responseJSON.success) {
-        if (images.length > 0)
-          await Promise.all(
-            images.forEach(async (id) => await deleteImage(id))
-          );
+        try {
+          if (images.length > 0)
+            await Promise.all(
+              images.forEach(async (id) => await deleteImage(id))
+            );
+        } catch (e) {}
+        setRefreshData(response);
         setIsLoading(false);
         hidePopup();
         return;
@@ -321,6 +331,7 @@ export const AlbumProvider = ({ children, setIsLoading }) => {
     addMoreDishes,
     removeDishes,
     addOtherImage,
+    removeOtherImage,
     cancelCreate,
     addImageForDeletion,
     addImageForUpload,

@@ -15,6 +15,7 @@ const AccountMenu = ({ setShowAccountMenu, setError, setShowConfirm }) => {
   };
 
   const onDeleteAccount = async () => {
+    setShowAccountMenu(false);
     setShowConfirm({ show: true, type: "delete-account" });
   };
 

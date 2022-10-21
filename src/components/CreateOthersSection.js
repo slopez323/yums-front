@@ -15,13 +15,14 @@ const CreateOthersSection = () => {
     let widget = window.cloudinary.createUploadWidget(
       {
         cloudName: process.env.REACT_APP_CLOUD_NAME,
-        sources: ["local", "url", "google_drive"],
+        sources: ["local", "url"],
         uploadPreset: process.env.REACT_APP_UPLOAD_PRESET,
         folder: "yums",
         maxFiles: 20,
         clientAllowedFormats: "image",
       },
       (error, result) => {
+        console.log(result);
         if (!error && result && result.event === "queues-end") {
           const files = result.info.files;
           const newImages = files.map((file) => {
@@ -30,8 +31,9 @@ const CreateOthersSection = () => {
               public_id: file.uploadInfo.public_id,
             };
           });
-          addOtherImage([...newImages]);
-          addImageForUpload([...newImages]);
+          console.log("new imgs", newImages);
+          addOtherImage(newImages);
+          addImageForUpload(newImages);
         }
       }
     );
