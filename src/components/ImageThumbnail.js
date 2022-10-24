@@ -15,7 +15,8 @@ const ImageThumbNail = ({ image, name, index }) => {
 
   const handleImageDelete = () => {
     addImageForDeletion(image.public_id);
-    if (index) {
+    if (index >= 0) {
+      console.log(index);
       updateDishes(index, "image", null);
     } else {
       removeOtherImage(image);
