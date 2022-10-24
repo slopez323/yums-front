@@ -22,7 +22,6 @@ const CreateOthersSection = () => {
         clientAllowedFormats: "image",
       },
       (error, result) => {
-        console.log(result);
         if (!error && result && result.event === "queues-end") {
           const files = result.info.files;
           const newImages = files.map((file) => {
@@ -31,7 +30,6 @@ const CreateOthersSection = () => {
               public_id: file.uploadInfo.public_id,
             };
           });
-          console.log("new imgs", newImages);
           addOtherImage(newImages);
           addImageForUpload(newImages);
         }
