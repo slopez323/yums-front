@@ -485,6 +485,7 @@ header{
 
 .dish-rating{
   display: flex;
+  align-items: center;
 }
 
 .dish-rating, .dish-rating select{
@@ -749,6 +750,7 @@ header{
   }
   .thumbnail{
     height: 40px;
+    max-width: 40px;
   }
   .create-dish-section button{
     align-self: center;
