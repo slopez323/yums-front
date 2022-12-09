@@ -258,9 +258,6 @@ header{
   font-size: 3rem;
   background-color: #FCFEFB;
   color: #8d8d8d;
-  padding: 0 20px;
-  max-width: 100vw;
-  box-sizing: border-box;
 }
 
 .overview>div{
@@ -730,6 +727,12 @@ header{
   }
   header{
     padding-right: 10px;
+  }
+  .overview{
+    justify-content: flex-start;
+    padding: 40px 20px;
+    max-width: 100vw;
+    box-sizing: border-box;
   }
   .create-general-section{
     grid-template-columns: 1fr;
