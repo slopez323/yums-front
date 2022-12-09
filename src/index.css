@@ -483,6 +483,17 @@ header{
   grid-template-columns: auto 1fr;
 }
 
+
+.dish-details button{
+  background-color: #1e293b;
+  color: #fff;
+}
+
+.dish-details button:hover{
+  color: #1e293b;
+  background-color: #fff;
+}
+
 .dish-rating{
   display: flex;
   align-items: center;
@@ -750,6 +761,14 @@ header{
   }
   .create-dish-section label{
     font-size: .8rem;
+  }
+  .dish-details{
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
+  .dish-details span+div{
+    grid-column: 1/4;
+    justify-self: center;
   }
   .dish-rating, .dish-rating select{
     font-size: 1rem;
