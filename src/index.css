@@ -258,6 +258,9 @@ header{
   font-size: 3rem;
   background-color: #FCFEFB;
   color: #8d8d8d;
+  padding: 20px;
+  max-width: 100vw;
+  box-sizing: border-box;
 }
 
 .overview>div{
