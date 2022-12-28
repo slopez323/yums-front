@@ -20,11 +20,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "REACT_APP_URL_ENDPOINT=/api react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "dev": "REACT_APP_URL_ENDPOINT=http://localhost:4000/api react-scripts start"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
