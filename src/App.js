@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import Overview from "./components/Overview";
 import LoginPage from "./components/pages/LoginPage";
 import MainPage from "./components/pages/MainPage";
@@ -21,7 +21,7 @@ const App = () => {
   }, [error.show]);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <AuthProvider setIsLoading={setIsLoading}>
         <Routes>
           <Route
@@ -50,7 +50,7 @@ const App = () => {
           </Route>
         </Routes>
       </AuthProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
